@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.3.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -597,6 +597,19 @@ sizeof(b): 16
 
 </code></pre>
 <p>可以看出，内存占用是不一致的。<code>sizeof()</code>可以计算给定元素的内存占用，不一定偏得是变量啥的，还可以是那些数据类型，比如<code>sizeof(int)</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="细"><a class="header" href="#细">细🔒</a></h1>
+<p>数组在定义的时候需要说明它的元素个数，若是空着不写无法通过编译器的检查，不过如果编译器版本太低的话倒是可以。不过可以使用<code>malloc()</code>动态分配数组，在内存分配那一节将会说这个。</p>
+<p>C语言没有字符串的概念，如果要实现字符串的话需要使用字符数组。但是数组需要明确说明元素个数，太麻烦了。这里可以使用指针，就像这样：</p>
+<pre><code class="language-c">char* str = &quot;test&quot;;
+char* str = &quot;测试&quot;;
+</code></pre>
+<p>C语言字符数组对非ASCII字符使用UTF-8编码，汉语在这里占三个字节。可以使用<em>string.h</em>里的<code>strlen()</code>函数证明这一点。</p>
+<p>正因为数组和指针内部差不多，你在函数传参中传递一个数组时，比如这样：</p>
+<pre><code class="language-c">// a is a array
+
+int len = strlen(a);
+</code></pre>
+<p>这样传递过去的不过是首位元素的地址，也就是个指针罢了。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="程序执行流程的控制"><a class="header" href="#程序执行流程的控制">程序执行流程的控制</a></h1>
 <p>编写程序的时候难免会需要对一些结果进行判断，或者是重复进行某些操作。接下来将会介绍这些东西。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="判断"><a class="header" href="#判断">判断</a></h1>
