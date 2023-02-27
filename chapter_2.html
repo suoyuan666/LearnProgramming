@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html" class="active"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_1-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html" class="active"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -191,7 +191,7 @@ success
 <p>前两行定义两个变量，一个是需要编译的源文件，一个是编译后的目标文件。</p>
 <p>第四行表示的意思是hello这个文件依赖于$(source)，下两行是产生这个文件具体要执行的命令。至于为什么第二条命令前会有一个<code>@</code>，这表示将这条命令隐藏起来不输出在终端上。</p>
 <p>clean表示清除操作，就像clean下一行的命令那样，<code>make clean</code>命令就会执行<code>rm</code>操作。</p>
-<hr />
+<h2 id="如果想要了解更多makefile的写法啥的可以访问跟我一起写makefile"><a class="header" href="#如果想要了解更多makefile的写法啥的可以访问跟我一起写makefile">如果想要了解更多Makefile的写法啥的，可以访问<a href="https://seisman.github.io/how-to-write-makefile/index.html">跟我一起写Makefile</a></a></h2>
 <p>在介绍各种数据类型之前，先引入对信息的表达进行说明。</p>
 <h3 id="信息的表达"><a class="header" href="#信息的表达">信息的表达</a></h3>
 <p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。</p>

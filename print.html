@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_1-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -147,6 +147,7 @@
 <p>我希望能够给初学编程的人一个好一些的编程教程，当然我也在学习，所以可能会有一些错误。</p>
 <p>这里我并不完全局限于一个编程语言，还会说一些其他相关的东西。一定程度上，也可以说是一个缝合的作品罢了()。</p>
 <p>我现在使用的操作系统是GNU/Linux，并不是Windows，对于Windows下如何编译C语言成一个可执行程序这个问题，我的回答是下载<a href="https://visualstudio.microsoft.com/zh-hans/vs/">Visual studio</a>。</p>
+<p>有一些章节最后会有一个细🔒的部分，这是对那一章节的内容的补充说明。</p>
 <h2 id="大纲"><a class="header" href="#大纲">大纲</a></h2>
 <p>本项目主要介绍的是C语言的教程，大体上会讲如下章节：</p>
 <ul>
@@ -226,7 +227,7 @@ success
 <p>前两行定义两个变量，一个是需要编译的源文件，一个是编译后的目标文件。</p>
 <p>第四行表示的意思是hello这个文件依赖于$(source)，下两行是产生这个文件具体要执行的命令。至于为什么第二条命令前会有一个<code>@</code>，这表示将这条命令隐藏起来不输出在终端上。</p>
 <p>clean表示清除操作，就像clean下一行的命令那样，<code>make clean</code>命令就会执行<code>rm</code>操作。</p>
-<hr />
+<h2 id="如果想要了解更多makefile的写法啥的可以访问跟我一起写makefile"><a class="header" href="#如果想要了解更多makefile的写法啥的可以访问跟我一起写makefile">如果想要了解更多Makefile的写法啥的，可以访问<a href="https://seisman.github.io/how-to-write-makefile/index.html">跟我一起写Makefile</a></a></h2>
 <p>在介绍各种数据类型之前，先引入对信息的表达进行说明。</p>
 <h3 id="信息的表达"><a class="header" href="#信息的表达">信息的表达</a></h3>
 <p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。</p>
@@ -528,6 +529,8 @@ printf(&quot;%d %d %d&quot;, a[0], a[1], a[2]);
 printf(&quot;%d %d %d&quot;, *a, *a+1, *a+2);
 </code></pre>
 <p>上边是指针解引用，数组和指针在底层都是差不多的东西，如果没有数组下标，那么也都是一群地址，直接解引用就可以访问。</p>
+<h2 id="字符串的实现"><a class="header" href="#字符串的实现">字符串的实现</a></h2>
+<p>之前介绍的char类型只能存储一个字符，如果想要存储单词这样的字符串</p>
 <h3 id="结构体"><a class="header" href="#结构体">结构体</a></h3>
 <p>结构体可以将不同的数据类型整到一块。用关键字<code>struct</code>关键字定义。</p>
 <pre><code class="language-c">//filename: struct.c
@@ -816,6 +819,68 @@ int main(void){
 <pre><code class="language-c">do{
     &lt;code&gt;
 }while(&lt;condition&gt;)
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="函数调用"><a class="header" href="#函数调用">函数调用</a></h1>
+<p>函数是对一堆的封装，编写程序很有可能就会遇到一些基本普偏使用的功能，比如打印字符串，这是C语言标准库里就实现好了的函数，直接引入相关头文件再调用就好；还有一些对一些程序来说没那么基本的功能，这就需要自己来实现了。</p>
+<p>函数的使用自然也可以减少程序源代码的行数，增加程序的可读性，也可以让使用者不必在乎函数功能内部的实现逻辑直接拿来就用。</p>
+<h2 id="创建函数"><a class="header" href="#创建函数">创建函数</a></h2>
+<p>创建函数的基本格式是</p>
+<pre><code class="language-c">&lt;return value type&gt; &lt;function name&gt; (arguments ...){
+    &lt;code&gt;
+}
+</code></pre>
+<p>就像这样：</p>
+<pre><code class="language-c">int add(int a, int b){
+    return a + n;
+}
+</code></pre>
+<p>这段代码就是创建了一个<code>add()</code>函数用于加两个数。</p>
+<p>C语言中，如要调用一个函数，如果调用函数在被调用函数之前，虽然还是可以调用的，编译器会报一个Warnning。调用函数中有过有一个变量接受调用函数的返回值，如果类型不对的话，编译器会报error（至少GCC编译器是这样）。但还是推荐先在源代码的前面写上函数声明，这样一个Warnning都没有了。以<code>add()</code>函数为例，函数声明这么写：</p>
+<pre><code class="language-c">int add(int a, int b);
+</code></pre>
+<p>函数声明就是告诉编译器有这么一个函数，不需要具体的函数实现。</p>
+<p>比如下面这个有函数声明的例子：</p>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+
+int add(int a, int b);
+
+int main(void){
+    int a = 1, b = 2;
+    printf(&quot;a + b = %d&quot;, add(a, b));
+    return 0;
+}
+int add(int a, int b){
+    return a + b;
+}
+</code></pre>
+<p>返回值的数据类型就是在第二章中介绍的数据类型了。</p>
+<p>在此顺便介绍一下<code>main()</code>函数的参数：argc和argv。这两个参数的意思是传递给程序的参数的个数和实际参数的值。</p>
+<hr />
+<p>如果你没有使用过在终端执行程序，也许很难理解双击执行程序的时候怎么还会有传递参数这种行为。如果是这样的话，我推荐你试一试，不需要GNU/Linux系统，Windows 11自带的Windows Terminal就不错，Win10的话不自带就自己下载吧，你可以在其中执行几个命令试一试。如果你没调整过默认起的话就是是PowerShell，这里介绍几个命令：</p>
+<pre><code class="language-bash">ls #列出当前目录的文件，如果ls后面空格接文件夹的话就列出那个文件夹的文件
+cd #切换目录
+</code></pre>
+<p>这里只介绍了两个命令，我懒了()。如果想要更多的了解，可以访问<a href="https://missing-semester-cn.github.io/">计算机教育中缺失的一课</a></p>
+<hr />
+<p>下面来一个获取命令行参数的代码：</p>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+
+int main(int argc, char* argv[]){
+    for(int i = 0; i &lt; argc; i++)
+        printf(&quot;argv[%i]: %s&quot;, i, argv[i]);
+    return 0;
+}
+</code></pre>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; gcc argu.c -o argu
+
+~/CodeProject/C/LP
+&gt; ./argu 123 56 si
+argv[0]: ./argu
+argv[1]: 123
+argv[2]: 56
+argv[3]: si
+
 </code></pre>
 
                     </main>

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>概述 - 学习编程</title>
+        <title>复杂数据类型 - 学习编程</title>
 
 
         <!-- Custom HTML head -->
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html" class="active"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html" class="active"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -142,48 +142,105 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="概述"><a class="header" href="#概述">概述</a></h1>
-<p>我希望能够给初学编程的人一个好一些的编程教程，当然我也在学习，所以可能会有一些错误。</p>
-<p>这里我并不完全局限于一个编程语言，还会说一些其他相关的东西。一定程度上，也可以说是一个缝合的作品罢了()。</p>
-<p>我现在使用的操作系统是GNU/Linux，并不是Windows，对于Windows下如何编译C语言成一个可执行程序这个问题，我的回答是下载<a href="https://visualstudio.microsoft.com/zh-hans/vs/">Visual studio</a>。</p>
-<p>有一些章节最后会有一个细🔒的部分，这是对那一章节的内容的补充说明。</p>
-<h2 id="大纲"><a class="header" href="#大纲">大纲</a></h2>
-<p>本项目主要介绍的是C语言的教程，大体上会讲如下章节：</p>
-<ul>
-<li>第一章、数据的表示
-<ul>
-<li>这一章节将会先从经典的打印输出success程序入手，再过一遍数据类型（整数，小数，字符等等）。</li>
-</ul>
-</li>
-<li>第二章、程序执行流程的控制
-<ul>
-<li>这一章将介绍如何在程序中决定是否要去执行某些操作，还有如何重复执行一些固定的操作等等。</li>
-</ul>
-</li>
-<li>第五章、函数调用
-<ul>
-<li>这一章将会介绍函数的使用和其他一些相关机制介绍。</li>
-</ul>
-</li>
-<li>第四章、内存分配
-<ul>
-<li>这一章简单介绍一些在程序运行时动态地获取和抛下存储空间。</li>
-</ul>
-</li>
-<li>第五章、文件操作
-<ul>
-<li>这一章将介绍如何对文件进行操作。</li>
-</ul>
-</li>
-<li>...</li>
-</ul>
+                        <h1 id="复杂数据类型"><a class="header" href="#复杂数据类型">复杂数据类型</a></h1>
+<p>这里会介绍数组，结构体，联合和枚举，后两个先立个flag，我现在不太了解他俩，先不说这俩了。</p>
+<h2 id="数组"><a class="header" href="#数组">数组</a></h2>
+<p>数组即一组数据，这些数据有着统一的数据类型。若要声明一个int类型的数组：</p>
+<pre><code class="language-c">int a[5];
+</code></pre>
+<p>中括号里面的表示这个数组的元素个数，如果你要一一为它们赋初值的话：</p>
+<pre><code class="language-c">int a[3] ={2, 3, 5};
+</code></pre>
+<p>数组是可以嵌套的（数组的元素也是一个数组），也就是所谓的多维数组，这里展示一手二维数组：</p>
+<pre><code class="language-c">int a[2][3] = {{1, 2, 3}, {4, 5, 6}};
+
+typedef int b [3];
+b a [2] = {{1, 2, 3}, {4, 5, 6}};
+</code></pre>
+<p>第一行和后两行是等效的。</p>
+<p><code>typedef</code>关键字用于定义一个别名。</p>
+<p>访问数组有以下两种方式，以下都以一维数组为例</p>
+<pre><code class="language-c">int a[3] = {1, 2, 3};
+printf(&quot;%d %d %d&quot;, a[0], a[1], a[2]);
+</code></pre>
+<p>这是一种访问方式，<code>a[0]</code>中的0表示数组下标，下标从0开始表示第一个元素。</p>
+<pre><code class="language-c">int a[3] = {1, 2, 3};
+printf(&quot;%d %d %d&quot;, *a, *a+1, *a+2);
+</code></pre>
+<p>上边是指针解引用，数组和指针在底层都是差不多的东西，如果没有数组下标，那么也都是一群地址，直接解引用就可以访问。</p>
+<h2 id="字符串的实现"><a class="header" href="#字符串的实现">字符串的实现</a></h2>
+<p>之前介绍的char类型只能存储一个字符，如果想要存储单词这样的字符串</p>
+<h3 id="结构体"><a class="header" href="#结构体">结构体</a></h3>
+<p>结构体可以将不同的数据类型整到一块。用关键字<code>struct</code>关键字定义。</p>
+<pre><code class="language-c">//filename: struct.c
+#include&lt;stdio.h&gt;
+int main(void){
+    typedef struct a{
+        int a;
+        float s;
+        char n;
+    } a;
+    a test = {1, 2.0, 's'};
+    a te;
+    te.a = 1;
+    te.s = 5.0; te.n = 'a';
+    printf(&quot;test.a: %d\n&quot;, test.a);
+    printf(&quot;test.n: %c\n&quot;, test.n);
+    printf(&quot;te.s: %f\n&quot;, te.s);
+    printf(&quot;te.n: %c\n&quot;, te.n);
+    return 0;
+}
+</code></pre>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; gcc struct.c -o struct
+
+~/CodeProject/C/LP
+&gt; ./struct
+test.a: 1
+test.n: s
+te.s: 5.000000
+te.n: a
+
+</code></pre>
+<p>这里介绍了访问结构体元素的方法，赋值的时候可以像test那样先赋上，或者像te那样都可以。这里用<code>typedef</code>定义别名是为了方便，如果不使用typedef的话，定义一个结构体的元素需要在前面加上一个<code>struct</code>关键字。</p>
+<p>结构体有一个内存对齐的问题，内存对齐可以提高访问内存的效率。比如下面的代码：</p>
+<pre><code class="language-c">#include&lt;stdio.h&gt;
+int main(void){
+    struct a{
+        int h;
+        double s;
+        char n;
+    };
+    struct b{
+        char n;
+        int h;
+        double s;
+    };
+    printf(&quot;sizeof(a): %d\n&quot;, sizeof(struct a));
+    printf(&quot;sizeof(b): %d\n&quot;, sizeof(struct b));
+    return 0;
+}
+</code></pre>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; gcc struct.c -o struct
+
+~/CodeProject/C/LP
+&gt; ./struct
+sizeof(a): 24
+sizeof(b): 16
+
+</code></pre>
+<p>可以看出，内存占用是不一致的。<code>sizeof()</code>可以计算给定元素的内存占用，不一定偏得是变量啥的，还可以是那些数据类型，比如<code>sizeof(int)</code></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_2-typidata.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
-                            <a rel="next" href="chapter_2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="chapter_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -193,8 +250,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_2-typidata.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-                    <a rel="next" href="chapter_2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="chapter_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
