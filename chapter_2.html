@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html" class="active"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html" class="active"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_1-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,8 +169,8 @@ success
 <hr />
 <p>这里的<code>gcc</code>命令用于编译程序，<code>-o</code>后面是编译生成的程序的名称，如果没有这个选项，就生成默认的<code>a.out</code></p>
 <p>这里介绍一个编译程序更好的办法——编写Makefile</p>
-<p>Makefile可以帮助你更好地编译程序，它可以自动化的完成编译工作。写完之后，只需要一个<code>make</code>命令就可以完成编译，甚至根据你的需求还可以实现其他功能。如果是大型项目，一个makefile自然能省很多事。
-对于上面输出success的代码，mkaefile可以这样些：</p>
+<p>Makefile可以帮助你更好地编译程序，它可以自动化的完成编译工作。写完之后，只需要一个<code>make</code>命令就可以完成编译，甚至根据你的需求还可以实现其他功能。如果是大型项目，一个makefile自然能省很多事。</p>
+<p>对于上面输出success的代码，mkaefile可以这样些：</p>
 <pre><code class="language-Makefile">source = hello.c
 target = hello
 
@@ -192,369 +192,11 @@ success
 <p>第四行表示的意思是hello这个文件依赖于$(source)，下两行是产生这个文件具体要执行的命令。至于为什么第二条命令前会有一个<code>@</code>，这表示将这条命令隐藏起来不输出在终端上。</p>
 <p>clean表示清除操作，就像clean下一行的命令那样，<code>make clean</code>命令就会执行<code>rm</code>操作。</p>
 <hr />
-<h2 id="常见的数据类型"><a class="header" href="#常见的数据类型">常见的数据类型</a></h2>
 <p>在介绍各种数据类型之前，先引入对信息的表达进行说明。</p>
 <h3 id="信息的表达"><a class="header" href="#信息的表达">信息的表达</a></h3>
-<p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。
-1 bit是一个二进制数，8 bit是一个byte，即一个字节。一个十六进制数由4个二进制数表达，一个字节就是两个十六进制数。
-在64位的机器上，8字节为一组，32位的机器则是4字节为一组。</p>
-<h3 id="简单数据类型"><a class="header" href="#简单数据类型">简单数据类型</a></h3>
-<p>在上面就已经介绍了两种数据类型了——int和void。</p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: center">数据类型</th><th style="text-align: center">关键字</th><th style="text-align: center">大小（字节）</th></tr></thead><tbody>
-<tr><td style="text-align: center">字符</td><td style="text-align: center">char</td><td style="text-align: center">1</td></tr>
-<tr><td style="text-align: center">整数</td><td style="text-align: center">short</td><td style="text-align: center">2</td></tr>
-<tr><td style="text-align: center">整数</td><td style="text-align: center">int</td><td style="text-align: center">4</td></tr>
-<tr><td style="text-align: center">整数</td><td style="text-align: center">long</td><td style="text-align: center">8</td></tr>
-<tr><td style="text-align: center">浮点数</td><td style="text-align: center">float</td><td style="text-align: center">4</td></tr>
-<tr><td style="text-align: center">浮点数</td><td style="text-align: center">double</td><td style="text-align: center">8</td></tr>
-</tbody></table>
-</div>
-<p>三个整数所占字节大小不同，能表达的整数的范围也就不同，字符是通过ASCII码来表示的，浮点数中，<code>float</code>是单精度，<code>double</code>是双精度。精度可以理解为表达的小数是否精确的精度。float能表达的小数位数是要比double少的。</p>
-<p>声明一个变量的基本格式就是<code>&lt;datatype&gt; &lt;varname&gt;</code></p>
-<p>如果在声明一个变量就要给他赋一个初始值的话，还有在后面加上等号还有初始值：</p>
-<pre><code>&lt;datatype&gt; &lt;varname&gt; = &lt;data&gt;
-</code></pre>
-<pre><code class="language-c">int a = 1;
-char var = 'a';
-double f = 2.5;
-</code></pre>
-<p>char字符需要用单引号包一手，否则会被认为是变量a。<code>=</code>在这里表示赋值，从右往左读。</p>
-<pre><code class="language-c">//filename: datatype.c
-#include&lt;stdio.h&gt;
-int main(void){
-    int a = 1;
-    char var = 'a';
-    double f = 2.5;
-    printf(&quot;a: %d\n&quot;, a);
-    printf(&quot;var: %c\n&quot;, var);
-    printf(&quot;f: %f\n&quot;, f);
-    return 0;
-}
-</code></pre>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; gcc datatype.c -o datatype
-
-~/CodeProject/C/LP
-&gt; ./datatype
-a: 1
-var: a
-f: 2.500000
-
-</code></pre>
-<p><code>printf()</code>函数中<code>%</code>开头的转换格式，它以<code>%</code>开始，转换说明符结尾。man-pages中的相关叙述如下</p>
-<blockquote>
-<p>The  format  string  is  a  character string, beginning and ending in its initial shift state, if any.  The format string is composed of zero or more directives: ordinary characters (not %), which are copied un‐changed to the output stream; and conversion specifications, each of which results in fetching zero or more subsequent arguments.  Each conversion specification is introduced by the character %, and ends with a conversion specifier.  In between there may be (in this order) zero or more flags, an optional minimum field width, an optional precision and an optional length modifier.</p>
-</blockquote>
-<blockquote>
-<p>The overall syntax of a conversion specification is:</p>
-</blockquote>
-<blockquote>
-<p>%[$][flags][width][.precision][length modifier]conversion</p>
-</blockquote>
-<p>%d就是整数，%c是字符，%f是浮点数。这里的d、c、f就是转换说明符。更多关于<code>printf()</code>函数的介绍，可以在man-pages中看看。</p>
-<p>在这里我小小介绍一手汇编语言，在我看来，在学习C语言的时候不了解一点点的汇编是没有灵魂的。汇编作为比较易读的底层语言（虽然没有C语言这样的高级语言易读），在我看来可以更能帮助你认识到一些语言背后的机制。</p>
-<p>我这里使用objdump工具反汇编刚刚这个datatype。</p>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; objdump -d datatype
-
-datatype：     文件格式 elf64-x86-64
-
-
-Disassembly of section .init:
-
-0000000000001000 &lt;_init&gt;:
-    1000:       f3 0f 1e fa             endbr64
-    1004:       48 83 ec 08             sub    $0x8,%rsp
-    1008:       48 8b 05 c1 2f 00 00    mov    0x2fc1(%rip),%rax        # 3fd0 &lt;__gmon_start__@Base&gt;
-    100f:       48 85 c0                test   %rax,%rax
-    1012:       74 02                   je     1016 &lt;_init+0x16&gt;
-    1014:       ff d0                   call   *%rax
-    1016:       48 83 c4 08             add    $0x8,%rsp
-    101a:       c3                      ret
-
-Disassembly of section .plt:
-
-0000000000001020 &lt;printf@plt-0x10&gt;:
-    1020:       ff 35 ca 2f 00 00       push   0x2fca(%rip)        # 3ff0 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;
-    1026:       ff 25 cc 2f 00 00       jmp    *0x2fcc(%rip)        # 3ff8 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;
-    102c:       0f 1f 40 00             nopl   0x0(%rax)
-
-0000000000001030 &lt;printf@plt&gt;:
-    1030:       ff 25 ca 2f 00 00       jmp    *0x2fca(%rip)        # 4000 &lt;printf@GLIBC_2.2.5&gt;
-    1036:       68 00 00 00 00          push   $0x0
-    103b:       e9 e0 ff ff ff          jmp    1020 &lt;_init+0x20&gt;
-
-Disassembly of section .text:
-
-0000000000001040 &lt;_start&gt;:
-    1040:       f3 0f 1e fa             endbr64
-    1044:       31 ed                   xor    %ebp,%ebp
-    1046:       49 89 d1                mov    %rdx,%r9
-    1049:       5e                      pop    %rsi
-    104a:       48 89 e2                mov    %rsp,%rdx
-    104d:       48 83 e4 f0             and    $0xfffffffffffffff0,%rsp
-    1051:       50                      push   %rax
-    1052:       54                      push   %rsp
-    1053:       45 31 c0                xor    %r8d,%r8d
-    1056:       31 c9                   xor    %ecx,%ecx
-    1058:       48 8d 3d da 00 00 00    lea    0xda(%rip),%rdi        # 1139 &lt;main&gt;
-    105f:       ff 15 5b 2f 00 00       call   *0x2f5b(%rip)        # 3fc0 &lt;__libc_start_main@GLIBC_2.34&gt;
-    1065:       f4                      hlt
-    1066:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
-    106d:       00 00 00
-    1070:       48 8d 3d a1 2f 00 00    lea    0x2fa1(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
-    1077:       48 8d 05 9a 2f 00 00    lea    0x2f9a(%rip),%rax        # 4018 &lt;__TMC_END__&gt;
-    107e:       48 39 f8                cmp    %rdi,%rax
-    1081:       74 15                   je     1098 &lt;_start+0x58&gt;
-    1083:       48 8b 05 3e 2f 00 00    mov    0x2f3e(%rip),%rax        # 3fc8 &lt;_ITM_deregisterTMCloneTable@Base&gt;
-    108a:       48 85 c0                test   %rax,%rax
-    108d:       74 09                   je     1098 &lt;_start+0x58&gt;
-    108f:       ff e0                   jmp    *%rax
-    1091:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    1098:       c3                      ret
-    1099:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    10a0:       48 8d 3d 71 2f 00 00    lea    0x2f71(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
-    10a7:       48 8d 35 6a 2f 00 00    lea    0x2f6a(%rip),%rsi        # 4018 &lt;__TMC_END__&gt;
-    10ae:       48 29 fe                sub    %rdi,%rsi
-    10b1:       48 89 f0                mov    %rsi,%rax
-    10b4:       48 c1 ee 3f             shr    $0x3f,%rsi
-    10b8:       48 c1 f8 03             sar    $0x3,%rax
-    10bc:       48 01 c6                add    %rax,%rsi
-    10bf:       48 d1 fe                sar    %rsi
-    10c2:       74 14                   je     10d8 &lt;_start+0x98&gt;
-    10c4:       48 8b 05 0d 2f 00 00    mov    0x2f0d(%rip),%rax        # 3fd8 &lt;_ITM_registerTMCloneTable@Base&gt;
-    10cb:       48 85 c0                test   %rax,%rax
-    10ce:       74 08                   je     10d8 &lt;_start+0x98&gt;
-    10d0:       ff e0                   jmp    *%rax
-    10d2:       66 0f 1f 44 00 00       nopw   0x0(%rax,%rax,1)
-    10d8:       c3                      ret
-    10d9:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    10e0:       f3 0f 1e fa             endbr64
-    10e4:       80 3d 2d 2f 00 00 00    cmpb   $0x0,0x2f2d(%rip)        # 4018 &lt;__TMC_END__&gt;
-    10eb:       75 33                   jne    1120 &lt;_start+0xe0&gt;
-    10ed:       55                      push   %rbp
-    10ee:       48 83 3d ea 2e 00 00    cmpq   $0x0,0x2eea(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
-    10f5:       00
-    10f6:       48 89 e5                mov    %rsp,%rbp
-    10f9:       74 0d                   je     1108 &lt;_start+0xc8&gt;
-    10fb:       48 8b 3d 0e 2f 00 00    mov    0x2f0e(%rip),%rdi        # 4010 &lt;__dso_handle&gt;
-    1102:       ff 15 d8 2e 00 00       call   *0x2ed8(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
-    1108:       e8 63 ff ff ff          call   1070 &lt;_start+0x30&gt;
-    110d:       c6 05 04 2f 00 00 01    movb   $0x1,0x2f04(%rip)        # 4018 &lt;__TMC_END__&gt;
-    1114:       5d                      pop    %rbp
-    1115:       c3                      ret
-    1116:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
-    111d:       00 00 00
-    1120:       c3                      ret
-    1121:       66 66 2e 0f 1f 84 00    data16 cs nopw 0x0(%rax,%rax,1)
-    1128:       00 00 00 00
-    112c:       0f 1f 40 00             nopl   0x0(%rax)
-    1130:       f3 0f 1e fa             endbr64
-    1134:       e9 67 ff ff ff          jmp    10a0 &lt;_start+0x60&gt;
-
-0000000000001139 &lt;main&gt;:
-    1139:       55                      push   %rbp
-    113a:       48 89 e5                mov    %rsp,%rbp
-    113d:       48 83 ec 10             sub    $0x10,%rsp
-    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
-    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
-    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
-    1153:       00
-    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
-    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
-    115c:       89 c6                   mov    %eax,%esi
-    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
-    1165:       48 89 c7                mov    %rax,%rdi
-    1168:       b8 00 00 00 00          mov    $0x0,%eax
-    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
-    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
-    1176:       89 c6                   mov    %eax,%esi
-    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
-    117f:       48 89 c7                mov    %rax,%rdi
-    1182:       b8 00 00 00 00          mov    $0x0,%eax
-    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
-    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
-    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
-    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
-    119c:       48 89 c7                mov    %rax,%rdi
-    119f:       b8 01 00 00 00          mov    $0x1,%eax
-    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
-    11a9:       b8 00 00 00 00          mov    $0x0,%eax
-    11ae:       c9                      leave
-    11af:       c3                      ret
-
-Disassembly of section .fini:
-
-00000000000011b0 &lt;_fini&gt;:
-    11b0:       f3 0f 1e fa             endbr64
-    11b4:       48 83 ec 08             sub    $0x8,%rsp
-    11b8:       48 83 c4 08             add    $0x8,%rsp
-    11bc:       c3                      ret
-
-
-</code></pre>
-<hr />
-<p>概念介绍：</p>
-<p>栈是一个后入先出的数据结构，压入和弹出数据都在栈的一端，称为栈顶，这是寄存器rsp指向的地方，即rsp保存栈顶的地址，rbp指向函数的栈底。下图是在栈的示意图：</p>
-<p><img src="./img/%E8%B0%83%E7%94%A8%E6%A0%88%E5%B8%A7.png" alt="调用栈" /></p>
-<p>从这里可以看出，栈顶在低地址，增大栈的容量就是让rsp保存的值变小。</p>
-<p>每个CPU都有一些寄存器，寄存器是一个存储设备，访问速度快但是容量少。32位的CPU有8个寄存器，到64位CPU就有了16个寄存器了。不同的寄存器被规定为有不同的用途，这里不过多介绍了。</p>
-<hr />
-<p><code>0000000000001139 &lt;main&gt;:</code>是我们编写的main函数的代码产生的汇编代码。其他地方我这里先不过多介绍。</p>
-<pre><code class="language-asm">0000000000001139 &lt;main&gt;:
-    1139:       55                      push   %rbp
-    113a:       48 89 e5                mov    %rsp,%rbp
-    113d:       48 83 ec 10             sub    $0x10,%rsp
-    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
-    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
-    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
-    1153:       00
-    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
-    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
-    115c:       89 c6                   mov    %eax,%esi
-    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
-    1165:       48 89 c7                mov    %rax,%rdi
-    1168:       b8 00 00 00 00          mov    $0x0,%eax
-    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
-    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
-    1176:       89 c6                   mov    %eax,%esi
-    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
-    117f:       48 89 c7                mov    %rax,%rdi
-    1182:       b8 00 00 00 00          mov    $0x0,%eax
-    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
-    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
-    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
-    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
-    119c:       48 89 c7                mov    %rax,%rdi
-    119f:       b8 01 00 00 00          mov    $0x1,%eax
-    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
-    11a9:       b8 00 00 00 00          mov    $0x0,%eax
-    11ae:       c9                      leave
-    11af:       c3                      ret
-</code></pre>
-<p>前两行是调用函数都有的两行，<code>push</code>用来把数据压入栈中。<code>push %rbp</code>就是要将rbp寄存器的值保存到栈上。<code>mov</code>指令用来把一个地方的值复制到另一个地方，<code>mov    %rsp,%rbp</code>就是将rsp寄存器的值复制给rbp寄存器。第一条指令没有生效的时候，rbp保存的还是调用main函数的上一个函数的栈底的地址，<code>push</code>的作用是在将rbp改成main函数栈底之前先将原来的值保存。<code>mov    %rsp,%rbp</code>是将当前栈顶的地址给rbp寄存器，此后rbp寄存器不会变，栈顶会一直变化。</p>
-<p><code>sub</code>指令就是减法，<code>sub    $0x10,%rsp</code>将rsp的值减了0x10，十进制表示16字节，就是给栈多搞出来了16字节的空间。</p>
-<p>第三行的<code>movl</code>是<code>mov</code>指令的变种，用来传递4字节的值。-0xc(%rbp)表达的意思是访问%rbp + -0xc这个地址的值，那么<code>movl   $0x1,-0xc(%rbp)</code>这条指令就是把那个地址放上1这个值，之前rsp减去16给函数栈整出来了16字节的空闲空间，rbp-0xc就是指向rsp+4的位置，对应源代码就知道，这个汇编代码应该对应<code>int a = 1;</code>，而int也正是4字节。第四行的<code> movb   $0x61,-0xd(%rbp)</code>中的<code>movb</code>用来传递1字节，这自然就是定义char变量那行代码的汇编代码，0x61是ASCII码中a字符的十六进制表示。</p>
-<p>后续的汇编代码就不说了，从1159到116d这几行代码这样的为一组就对应一个<code>printf()</code>函数的调用。</p>
-<p>接下来介绍一手指针，指针是一个存放地址的变量。假设我要定义一个指向int的指针：</p>
-<pre><code class="language-c">int *p;
-</code></pre>
-<p>如果这个指针要指向变量a的话：</p>
-<pre><code class="language-c">p = &amp;a;
-</code></pre>
-<p>如果要访问变量a，需要在p前面加上<code>*</code>解引用，如果直接访问p的话则是访问它的地址。</p>
-<pre><code class="language-c">// filename: point.c
-#include&lt;stdio.h&gt;
-int main(void){
-    int a = 5;
-    int *p;
-    p = &amp;a;
-    printf(&quot;a: %d\n&quot;, a);
-    printf(&quot;p: %d\n&quot;, p);
-    printf(&quot;*p: %d\n&quot;, *p);
-    return 0;
-}
-</code></pre>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; gcc point.c -o point
-
-~/CodeProject/C/LP
-&gt; ./point
-a: 5
-p: -1384803156
-*p: 5
-
-</code></pre>
-<p>之前介绍的都是变量，代码中还可以定义常量，即不会改变。常量需要使用<code>const</code>修饰变量，比如这样：</p>
-<pre><code class="language-c">const int a = 10;
-</code></pre>
-<h2 id="复杂数据类型"><a class="header" href="#复杂数据类型">复杂数据类型</a></h2>
-<p>这里会介绍数组，结构体，联合和枚举，后两个先立个flag，可惜我现在不太了解他俩，先不说这俩了。</p>
-<h3 id="数组"><a class="header" href="#数组">数组</a></h3>
-<p>数组即一组数据，这些数据有着统一的数据类型。若要声明一个int类型的数组：</p>
-<pre><code class="language-c">int a[5];
-</code></pre>
-<p>中括号里面的表示这个数组的元素个数，如果你要一一为它们赋初值的话：</p>
-<pre><code class="language-c">int a[3] ={2, 3, 5};
-</code></pre>
-<p>数组是可以嵌套的（数组的元素也是一个数组），也就是所谓的多维数组，这里展示一手二维数组：</p>
-<pre><code class="language-c">int a[2][3] = {{1, 2, 3}, {4, 5, 6}};
-
-typedef int b [3];
-b a [2] = {{1, 2, 3}, {4, 5, 6}};
-</code></pre>
-<p>第一行和后两行是等效的。
-<code>typedef</code>关键字用于定义一个别名。</p>
-<p>访问数组有以下两种方式，以下都以一维数组为例</p>
-<pre><code class="language-c">int a[3] = {1, 2, 3};
-printf(&quot;%d %d %d&quot;, a[0], a[1], a[2]);
-</code></pre>
-<p>这是一种访问方式，<code>a[0]</code>中的0表示数组下标，下标从0开始表示第一个元素。</p>
-<pre><code class="language-c">int a[3] = {1, 2, 3};
-printf(&quot;%d %d %d&quot;, *a, *a+1, *a+2);
-</code></pre>
-<p>上边是指针解引用，数组和指针在底层都是差不多的东西，如果没有数组下标，那么也都是一群地址，直接解引用就可以访问。</p>
-<h3 id="结构体"><a class="header" href="#结构体">结构体</a></h3>
-<p>结构体可以将不同的数据类型整到一块。用关键字<code>struct</code>关键字定义。</p>
-<pre><code class="language-c">//filename: struct.c
-#include&lt;stdio.h&gt;
-int main(void){
-    typedef struct a{
-        int a;
-        float s;
-        char n;
-    } a;
-    a test = {1, 2.0, 's'};
-    a te;
-    te.a = 1;
-    te.s = 5.0; te.n = 'a';
-    printf(&quot;test.a: %d\n&quot;, test.a);
-    printf(&quot;test.n: %c\n&quot;, test.n);
-    printf(&quot;te.s: %f\n&quot;, te.s);
-    printf(&quot;te.n: %c\n&quot;, te.n);
-    return 0;
-}
-</code></pre>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; gcc struct.c -o struct
-
-~/CodeProject/C/LP
-&gt; ./struct
-test.a: 1
-test.n: s
-te.s: 5.000000
-te.n: a
-
-</code></pre>
-<p>这里介绍了访问结构体元素的方法，赋值的时候可以像test那样先赋上，或者像te那样都可以。这里用<code>typedef</code>定义别名是为了方便，如果不使用typedef的话，定义一个结构体的元素需要在前面加上一个<code>struct</code>关键字。</p>
-<p>结构体有一个内存对齐的问题，内存对齐可以提高访问内存的效率。比如下面的代码：</p>
-<pre><code class="language-c">#include&lt;stdio.h&gt;
-int main(void){
-    struct a{
-        int h;
-        double s;
-        char n;
-    };
-    struct b{
-        char n;
-        int h;
-        double s;
-    };
-    printf(&quot;sizeof(a): %d\n&quot;, sizeof(struct a));
-    printf(&quot;sizeof(b): %d\n&quot;, sizeof(struct b));
-    return 0;
-}
-</code></pre>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; gcc struct.c -o struct
-
-~/CodeProject/C/LP
-&gt; ./struct
-sizeof(a): 24
-sizeof(b): 16
-
-</code></pre>
-<p>可以看出，内存占用是不一致的。<code>sizeof()</code>可以计算给定元素的内存占用，不一定偏得是变量啥的，还可以是那些数据类型，比如<code>sizeof(int)</code></p>
+<p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。</p>
+<p>1 bit是一个二进制数，8 bit是一个byte，即一个字节。一个十六进制数由4个二进制数表达，一个字节就是两个十六进制数。</p>
+<p>在64位的机器上，8字节为一组，32位的机器则是4字节为一组。</p>
 
                     </main>
 
@@ -564,7 +206,7 @@ sizeof(b): 16
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="chapter_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="chapter_2-typidata.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -578,7 +220,7 @@ sizeof(b): 16
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="chapter_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="chapter_2-typidata.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
