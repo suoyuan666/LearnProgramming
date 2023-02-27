@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_1-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,9 +144,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="概述"><a class="header" href="#概述">概述</a></h1>
-<p>我希望能够给初学编程的人一个好一些的编程教程，当然我也在学习，所以可能会有一些错误。
-这里我并不完全局限于一个编程语言，还会说一些其他相关的东西。一定程度上，也可以说是一个缝合的作品罢了()
-我现在使用的操作系统是GNU/Linux，并不是Windows，对于Windows下如何编译C语言成一个可执行程序这个问题，我的回答是下载<a href="https://visualstudio.microsoft.com/zh-hans/vs/">Visual studio</a>。</p>
+<p>我希望能够给初学编程的人一个好一些的编程教程，当然我也在学习，所以可能会有一些错误。</p>
+<p>这里我并不完全局限于一个编程语言，还会说一些其他相关的东西。一定程度上，也可以说是一个缝合的作品罢了()。</p>
+<p>我现在使用的操作系统是GNU/Linux，并不是Windows，对于Windows下如何编译C语言成一个可执行程序这个问题，我的回答是下载<a href="https://visualstudio.microsoft.com/zh-hans/vs/">Visual studio</a>。</p>
 <h2 id="大纲"><a class="header" href="#大纲">大纲</a></h2>
 <p>本项目主要介绍的是C语言的教程，大体上会讲如下章节：</p>
 <ul>
@@ -160,12 +160,17 @@
 <li>这一章将介绍如何在程序中决定是否要去执行某些操作，还有如何重复执行一些固定的操作等等。</li>
 </ul>
 </li>
-<li>第三章、内存分配
+<li>第五章、函数调用
+<ul>
+<li>这一章将会介绍函数的使用和其他一些相关机制介绍。</li>
+</ul>
+</li>
+<li>第四章、内存分配
 <ul>
 <li>这一章简单介绍一些在程序运行时动态地获取和抛下存储空间。</li>
 </ul>
 </li>
-<li>第四章、文件操作
+<li>第五章、文件操作
 <ul>
 <li>这一章将介绍如何对文件进行操作。</li>
 </ul>
@@ -199,8 +204,8 @@ success
 <hr />
 <p>这里的<code>gcc</code>命令用于编译程序，<code>-o</code>后面是编译生成的程序的名称，如果没有这个选项，就生成默认的<code>a.out</code></p>
 <p>这里介绍一个编译程序更好的办法——编写Makefile</p>
-<p>Makefile可以帮助你更好地编译程序，它可以自动化的完成编译工作。写完之后，只需要一个<code>make</code>命令就可以完成编译，甚至根据你的需求还可以实现其他功能。如果是大型项目，一个makefile自然能省很多事。
-对于上面输出success的代码，mkaefile可以这样些：</p>
+<p>Makefile可以帮助你更好地编译程序，它可以自动化的完成编译工作。写完之后，只需要一个<code>make</code>命令就可以完成编译，甚至根据你的需求还可以实现其他功能。如果是大型项目，一个makefile自然能省很多事。</p>
+<p>对于上面输出success的代码，mkaefile可以这样些：</p>
 <pre><code class="language-Makefile">source = hello.c
 target = hello
 
@@ -222,13 +227,12 @@ success
 <p>第四行表示的意思是hello这个文件依赖于$(source)，下两行是产生这个文件具体要执行的命令。至于为什么第二条命令前会有一个<code>@</code>，这表示将这条命令隐藏起来不输出在终端上。</p>
 <p>clean表示清除操作，就像clean下一行的命令那样，<code>make clean</code>命令就会执行<code>rm</code>操作。</p>
 <hr />
-<h2 id="常见的数据类型"><a class="header" href="#常见的数据类型">常见的数据类型</a></h2>
 <p>在介绍各种数据类型之前，先引入对信息的表达进行说明。</p>
 <h3 id="信息的表达"><a class="header" href="#信息的表达">信息的表达</a></h3>
-<p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。
-1 bit是一个二进制数，8 bit是一个byte，即一个字节。一个十六进制数由4个二进制数表达，一个字节就是两个十六进制数。
-在64位的机器上，8字节为一组，32位的机器则是4字节为一组。</p>
-<h3 id="简单数据类型"><a class="header" href="#简单数据类型">简单数据类型</a></h3>
+<p>无论是什么信息，到底层看都是二进制数。计算机为什么选择二进制在这里我并不准备叙述，这里指说一些相关概念。</p>
+<p>1 bit是一个二进制数，8 bit是一个byte，即一个字节。一个十六进制数由4个二进制数表达，一个字节就是两个十六进制数。</p>
+<p>在64位的机器上，8字节为一组，32位的机器则是4字节为一组。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="简单数据类型"><a class="header" href="#简单数据类型">简单数据类型</a></h1>
 <p>在上面就已经介绍了两种数据类型了——int和void。</p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: center">数据类型</th><th style="text-align: center">关键字</th><th style="text-align: center">大小（字节）</th></tr></thead><tbody>
 <tr><td style="text-align: center">字符</td><td style="text-align: center">char</td><td style="text-align: center">1</td></tr>
@@ -498,9 +502,9 @@ p: -1384803156
 <p>之前介绍的都是变量，代码中还可以定义常量，即不会改变。常量需要使用<code>const</code>修饰变量，比如这样：</p>
 <pre><code class="language-c">const int a = 10;
 </code></pre>
-<h2 id="复杂数据类型"><a class="header" href="#复杂数据类型">复杂数据类型</a></h2>
-<p>这里会介绍数组，结构体，联合和枚举，后两个先立个flag，可惜我现在不太了解他俩，先不说这俩了。</p>
-<h3 id="数组"><a class="header" href="#数组">数组</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="复杂数据类型"><a class="header" href="#复杂数据类型">复杂数据类型</a></h1>
+<p>这里会介绍数组，结构体，联合和枚举，后两个先立个flag，我现在不太了解他俩，先不说这俩了。</p>
+<h2 id="数组"><a class="header" href="#数组">数组</a></h2>
 <p>数组即一组数据，这些数据有着统一的数据类型。若要声明一个int类型的数组：</p>
 <pre><code class="language-c">int a[5];
 </code></pre>
@@ -513,8 +517,8 @@ p: -1384803156
 typedef int b [3];
 b a [2] = {{1, 2, 3}, {4, 5, 6}};
 </code></pre>
-<p>第一行和后两行是等效的。
-<code>typedef</code>关键字用于定义一个别名。</p>
+<p>第一行和后两行是等效的。</p>
+<p><code>typedef</code>关键字用于定义一个别名。</p>
 <p>访问数组有以下两种方式，以下都以一维数组为例</p>
 <pre><code class="language-c">int a[3] = {1, 2, 3};
 printf(&quot;%d %d %d&quot;, a[0], a[1], a[2]);
@@ -786,6 +790,33 @@ int main(void){
     115b:	c3                   	ret
 </code></pre>
 <p>其中<code>cmpl</code>就是对这两个值进行比较，<code>je</code>表示的是如果相等就跳转，<code>jg</code>表示的是如果大于就跳转。由此可见，这个程序中switch-case比if高明的地方就是会判断a到底是否大于3。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="循环"><a class="header" href="#循环">循环</a></h1>
+<p>循环语法总共有三种实现——while循环，do-while循环和for循环。其中最常用的应该是for循环了。</p>
+<h2 id="for"><a class="header" href="#for">for</a></h2>
+<p>一个典型的for循环如下：</p>
+<pre><code class="language-c">for(int i = 0; i &lt; 5; i++){
+    &lt;code&gt;
+}
+</code></pre>
+<p>上一段代码的含义是，先<code>int i = 0</code>，如果<code>i &lt; 5</code>，就执行内部的code，执行完后再执行<code>i++</code>，然后再做判断。</p>
+<p>for循环括号内的三个语句用<code>;</code>分隔，<code>int i = 0</code>和<code>i++</code>这俩部分可以省略，但是分号需要保留。</p>
+<p>如果for循环内部的code只有一行的话，也可以像if那样不写<code>{}</code>。</p>
+<pre><code class="language-c">for(int i = 0; i &lt; 5; i++)
+    &lt;code&gt;
+</code></pre>
+<h2 id="while"><a class="header" href="#while">while</a></h2>
+<p>while循环没有for循环这么花哨：</p>
+<pre><code class="language-c">while(&lt;condition&gt;){
+    &lt;code&gt;
+}
+</code></pre>
+<p>while循环也可以在code只有一行的时候去掉<code>{}</code>。</p>
+<h2 id="do-while"><a class="header" href="#do-while">do-while</a></h2>
+<p>do-while循环就是在while判断之前先执行一次。</p>
+<pre><code class="language-c">do{
+    &lt;code&gt;
+}while(&lt;condition&gt;)
+</code></pre>
 
                     </main>
 
