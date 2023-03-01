@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html" class="active"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.1.</strong> 细🔒</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html" class="active"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,9 +144,35 @@
                     <main>
                         <h1 id="汇编介绍"><a class="header" href="#汇编介绍">汇编介绍</a></h1>
 <p>这里我简单介绍x86_64汇编的一些内容，我认为都学习C语言了，顺便了解一点点汇编也是不错的。</p>
-<h2 id="att与intel汇编代码格式"><a class="header" href="#att与intel汇编代码格式">ATT与Intel汇编代码格式</a></h2>
-<p>这里的表述都遵循ATT格式，ATT是GCC、objdump等工具的默认格式，Microsoft的工具和Intel的文档都是Intel格式的。两种代码有很多不同之处，gcc编译时可以通过<code>-masm=intel</code>来指定生成Intel格式的代码
-Intel与ATT的区别：</p>
+<p>这里简单介绍一下编译器如何将C语言代码干成软件的，这个过程主要分成四步：</p>
+<ol>
+<li>预处理</li>
+</ol>
+<ul>
+<li>处理预处理指令</li>
+</ul>
+<ol start="2">
+<li>编译</li>
+</ol>
+<ul>
+<li>生成对应的汇编代码文件</li>
+</ul>
+<ol start="3">
+<li>汇编</li>
+</ol>
+<ul>
+<li>将汇编代码文件转为机器语言文件</li>
+</ul>
+<ol start="4">
+<li>链接</li>
+</ol>
+<ul>
+<li>将引入的文件(#include)链接到一起</li>
+</ul>
+<p>不同的处理器架构对应的汇编语言是不一样的，现在大多数人用的PC应该都是x86_64的，不过其实其他的汇编语言我也不太了解()。</p>
+<h2 id="att与intel汇编代码格式"><a class="header" href="#att与intel汇编代码格式">AT&amp;T与Intel汇编代码格式</a></h2>
+<p>这里的表述都遵循AT&amp;T格式，ATT是GCC、objdump等工具的默认格式，Microsoft的工具和Intel的文档都是Intel格式的。两种代码有很多不同之处，GCC编译时可以通过<code>-masm=intel</code>来指定生成Intel格式的代码
+Intel与AT&amp;T的区别：</p>
 <ul>
 <li>Intel代码省略了只是大小的后缀，比如push和mov，ATT则可以是pushq和movq</li>
 <li>Intel省略了寄存器名字前面的“%”符号，用的是rax而不是%rax</li>
