@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.3.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.1.</strong> 细🔒</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -292,190 +292,6 @@ f: 2.500000
 <p>%[$][flags][width][.precision][length modifier]conversion</p>
 </blockquote>
 <p>%d就是整数，%c是字符，%f是浮点数。这里的d、c、f就是转换说明符。更多关于<code>printf()</code>函数的介绍，可以在man-pages中看看。</p>
-<p>在这里我小小介绍一手汇编语言，在我看来，在学习C语言的时候不了解一点点的汇编是没有灵魂的。汇编作为比较易读的底层语言（虽然没有C语言这样的高级语言易读），在我看来可以更能帮助你认识到一些语言背后的机制。</p>
-<p>我这里使用objdump工具反汇编刚刚这个datatype。</p>
-<pre><code class="language-bash">~/CodeProject/C/LP
-&gt; objdump -d datatype
-
-datatype：     文件格式 elf64-x86-64
-
-
-Disassembly of section .init:
-
-0000000000001000 &lt;_init&gt;:
-    1000:       f3 0f 1e fa             endbr64
-    1004:       48 83 ec 08             sub    $0x8,%rsp
-    1008:       48 8b 05 c1 2f 00 00    mov    0x2fc1(%rip),%rax        # 3fd0 &lt;__gmon_start__@Base&gt;
-    100f:       48 85 c0                test   %rax,%rax
-    1012:       74 02                   je     1016 &lt;_init+0x16&gt;
-    1014:       ff d0                   call   *%rax
-    1016:       48 83 c4 08             add    $0x8,%rsp
-    101a:       c3                      ret
-
-Disassembly of section .plt:
-
-0000000000001020 &lt;printf@plt-0x10&gt;:
-    1020:       ff 35 ca 2f 00 00       push   0x2fca(%rip)        # 3ff0 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;
-    1026:       ff 25 cc 2f 00 00       jmp    *0x2fcc(%rip)        # 3ff8 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;
-    102c:       0f 1f 40 00             nopl   0x0(%rax)
-
-0000000000001030 &lt;printf@plt&gt;:
-    1030:       ff 25 ca 2f 00 00       jmp    *0x2fca(%rip)        # 4000 &lt;printf@GLIBC_2.2.5&gt;
-    1036:       68 00 00 00 00          push   $0x0
-    103b:       e9 e0 ff ff ff          jmp    1020 &lt;_init+0x20&gt;
-
-Disassembly of section .text:
-
-0000000000001040 &lt;_start&gt;:
-    1040:       f3 0f 1e fa             endbr64
-    1044:       31 ed                   xor    %ebp,%ebp
-    1046:       49 89 d1                mov    %rdx,%r9
-    1049:       5e                      pop    %rsi
-    104a:       48 89 e2                mov    %rsp,%rdx
-    104d:       48 83 e4 f0             and    $0xfffffffffffffff0,%rsp
-    1051:       50                      push   %rax
-    1052:       54                      push   %rsp
-    1053:       45 31 c0                xor    %r8d,%r8d
-    1056:       31 c9                   xor    %ecx,%ecx
-    1058:       48 8d 3d da 00 00 00    lea    0xda(%rip),%rdi        # 1139 &lt;main&gt;
-    105f:       ff 15 5b 2f 00 00       call   *0x2f5b(%rip)        # 3fc0 &lt;__libc_start_main@GLIBC_2.34&gt;
-    1065:       f4                      hlt
-    1066:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
-    106d:       00 00 00
-    1070:       48 8d 3d a1 2f 00 00    lea    0x2fa1(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
-    1077:       48 8d 05 9a 2f 00 00    lea    0x2f9a(%rip),%rax        # 4018 &lt;__TMC_END__&gt;
-    107e:       48 39 f8                cmp    %rdi,%rax
-    1081:       74 15                   je     1098 &lt;_start+0x58&gt;
-    1083:       48 8b 05 3e 2f 00 00    mov    0x2f3e(%rip),%rax        # 3fc8 &lt;_ITM_deregisterTMCloneTable@Base&gt;
-    108a:       48 85 c0                test   %rax,%rax
-    108d:       74 09                   je     1098 &lt;_start+0x58&gt;
-    108f:       ff e0                   jmp    *%rax
-    1091:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    1098:       c3                      ret
-    1099:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    10a0:       48 8d 3d 71 2f 00 00    lea    0x2f71(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
-    10a7:       48 8d 35 6a 2f 00 00    lea    0x2f6a(%rip),%rsi        # 4018 &lt;__TMC_END__&gt;
-    10ae:       48 29 fe                sub    %rdi,%rsi
-    10b1:       48 89 f0                mov    %rsi,%rax
-    10b4:       48 c1 ee 3f             shr    $0x3f,%rsi
-    10b8:       48 c1 f8 03             sar    $0x3,%rax
-    10bc:       48 01 c6                add    %rax,%rsi
-    10bf:       48 d1 fe                sar    %rsi
-    10c2:       74 14                   je     10d8 &lt;_start+0x98&gt;
-    10c4:       48 8b 05 0d 2f 00 00    mov    0x2f0d(%rip),%rax        # 3fd8 &lt;_ITM_registerTMCloneTable@Base&gt;
-    10cb:       48 85 c0                test   %rax,%rax
-    10ce:       74 08                   je     10d8 &lt;_start+0x98&gt;
-    10d0:       ff e0                   jmp    *%rax
-    10d2:       66 0f 1f 44 00 00       nopw   0x0(%rax,%rax,1)
-    10d8:       c3                      ret
-    10d9:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
-    10e0:       f3 0f 1e fa             endbr64
-    10e4:       80 3d 2d 2f 00 00 00    cmpb   $0x0,0x2f2d(%rip)        # 4018 &lt;__TMC_END__&gt;
-    10eb:       75 33                   jne    1120 &lt;_start+0xe0&gt;
-    10ed:       55                      push   %rbp
-    10ee:       48 83 3d ea 2e 00 00    cmpq   $0x0,0x2eea(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
-    10f5:       00
-    10f6:       48 89 e5                mov    %rsp,%rbp
-    10f9:       74 0d                   je     1108 &lt;_start+0xc8&gt;
-    10fb:       48 8b 3d 0e 2f 00 00    mov    0x2f0e(%rip),%rdi        # 4010 &lt;__dso_handle&gt;
-    1102:       ff 15 d8 2e 00 00       call   *0x2ed8(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
-    1108:       e8 63 ff ff ff          call   1070 &lt;_start+0x30&gt;
-    110d:       c6 05 04 2f 00 00 01    movb   $0x1,0x2f04(%rip)        # 4018 &lt;__TMC_END__&gt;
-    1114:       5d                      pop    %rbp
-    1115:       c3                      ret
-    1116:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
-    111d:       00 00 00
-    1120:       c3                      ret
-    1121:       66 66 2e 0f 1f 84 00    data16 cs nopw 0x0(%rax,%rax,1)
-    1128:       00 00 00 00
-    112c:       0f 1f 40 00             nopl   0x0(%rax)
-    1130:       f3 0f 1e fa             endbr64
-    1134:       e9 67 ff ff ff          jmp    10a0 &lt;_start+0x60&gt;
-
-0000000000001139 &lt;main&gt;:
-    1139:       55                      push   %rbp
-    113a:       48 89 e5                mov    %rsp,%rbp
-    113d:       48 83 ec 10             sub    $0x10,%rsp
-    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
-    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
-    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
-    1153:       00
-    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
-    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
-    115c:       89 c6                   mov    %eax,%esi
-    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
-    1165:       48 89 c7                mov    %rax,%rdi
-    1168:       b8 00 00 00 00          mov    $0x0,%eax
-    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
-    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
-    1176:       89 c6                   mov    %eax,%esi
-    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
-    117f:       48 89 c7                mov    %rax,%rdi
-    1182:       b8 00 00 00 00          mov    $0x0,%eax
-    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
-    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
-    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
-    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
-    119c:       48 89 c7                mov    %rax,%rdi
-    119f:       b8 01 00 00 00          mov    $0x1,%eax
-    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
-    11a9:       b8 00 00 00 00          mov    $0x0,%eax
-    11ae:       c9                      leave
-    11af:       c3                      ret
-
-Disassembly of section .fini:
-
-00000000000011b0 &lt;_fini&gt;:
-    11b0:       f3 0f 1e fa             endbr64
-    11b4:       48 83 ec 08             sub    $0x8,%rsp
-    11b8:       48 83 c4 08             add    $0x8,%rsp
-    11bc:       c3                      ret
-
-
-</code></pre>
-<hr />
-<p>概念介绍：</p>
-<p>栈是一个后入先出的数据结构，压入和弹出数据都在栈的一端，称为栈顶，这是寄存器rsp指向的地方，即rsp保存栈顶的地址，rbp指向函数的栈底。下图是在栈的示意图：</p>
-<p><img src="./img/%E8%B0%83%E7%94%A8%E6%A0%88%E5%B8%A7.png" alt="调用栈" /></p>
-<p>从这里可以看出，栈顶在低地址，增大栈的容量就是让rsp保存的值变小。</p>
-<p>每个CPU都有一些寄存器，寄存器是一个存储设备，访问速度快但是容量少。32位的CPU有8个寄存器，到64位CPU就有了16个寄存器了。不同的寄存器被规定为有不同的用途，这里不过多介绍了。</p>
-<hr />
-<p><code>0000000000001139 &lt;main&gt;:</code>是我们编写的main函数的代码产生的汇编代码。其他地方我这里先不过多介绍。</p>
-<pre><code class="language-asm">0000000000001139 &lt;main&gt;:
-    1139:       55                      push   %rbp
-    113a:       48 89 e5                mov    %rsp,%rbp
-    113d:       48 83 ec 10             sub    $0x10,%rsp
-    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
-    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
-    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
-    1153:       00
-    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
-    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
-    115c:       89 c6                   mov    %eax,%esi
-    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
-    1165:       48 89 c7                mov    %rax,%rdi
-    1168:       b8 00 00 00 00          mov    $0x0,%eax
-    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
-    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
-    1176:       89 c6                   mov    %eax,%esi
-    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
-    117f:       48 89 c7                mov    %rax,%rdi
-    1182:       b8 00 00 00 00          mov    $0x0,%eax
-    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
-    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
-    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
-    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
-    119c:       48 89 c7                mov    %rax,%rdi
-    119f:       b8 01 00 00 00          mov    $0x1,%eax
-    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
-    11a9:       b8 00 00 00 00          mov    $0x0,%eax
-    11ae:       c9                      leave
-    11af:       c3                      ret
-</code></pre>
-<p>前两行是调用函数都有的两行，<code>push</code>用来把数据压入栈中。<code>push %rbp</code>就是要将rbp寄存器的值保存到栈上。<code>mov</code>指令用来把一个地方的值复制到另一个地方，<code>mov    %rsp,%rbp</code>就是将rsp寄存器的值复制给rbp寄存器。第一条指令没有生效的时候，rbp保存的还是调用main函数的上一个函数的栈底的地址，<code>push</code>的作用是在将rbp改成main函数栈底之前先将原来的值保存。<code>mov    %rsp,%rbp</code>是将当前栈顶的地址给rbp寄存器，此后rbp寄存器不会变，栈顶会一直变化。</p>
-<p><code>sub</code>指令就是减法，<code>sub    $0x10,%rsp</code>将rsp的值减了0x10，十进制表示16字节，就是给栈多搞出来了16字节的空间。</p>
-<p>第三行的<code>movl</code>是<code>mov</code>指令的变种，用来传递4字节的值。-0xc(%rbp)表达的意思是访问%rbp + -0xc这个地址的值，那么<code>movl   $0x1,-0xc(%rbp)</code>这条指令就是把那个地址放上1这个值，之前rsp减去16给函数栈整出来了16字节的空闲空间，rbp-0xc就是指向rsp+4的位置，对应源代码就知道，这个汇编代码应该对应<code>int a = 1;</code>，而int也正是4字节。第四行的<code> movb   $0x61,-0xd(%rbp)</code>中的<code>movb</code>用来传递1字节，这自然就是定义char变量那行代码的汇编代码，0x61是ASCII码中a字符的十六进制表示。</p>
-<p>后续的汇编代码就不说了，从1159到116d这几行代码这样的为一组就对应一个<code>printf()</code>函数的调用。</p>
 <p>接下来介绍一手指针，指针是一个存放地址的变量。假设我要定义一个指向int的指针：</p>
 <pre><code class="language-c">int *p;
 </code></pre>
@@ -597,6 +413,375 @@ sizeof(b): 16
 
 </code></pre>
 <p>可以看出，内存占用是不一致的。<code>sizeof()</code>可以计算给定元素的内存占用，不一定偏得是变量啥的，还可以是那些数据类型，比如<code>sizeof(int)</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="汇编介绍"><a class="header" href="#汇编介绍">汇编介绍</a></h1>
+<p>这里我简单介绍x86_64汇编的一些内容，我认为都学习C语言了，顺便了解一点点汇编也是不错的。</p>
+<h2 id="att与intel汇编代码格式"><a class="header" href="#att与intel汇编代码格式">ATT与Intel汇编代码格式</a></h2>
+<p>这里的表述都遵循ATT格式，ATT是GCC、objdump等工具的默认格式，Microsoft的工具和Intel的文档都是Intel格式的。两种代码有很多不同之处，gcc编译时可以通过<code>-masm=intel</code>来指定生成Intel格式的代码
+Intel与ATT的区别：</p>
+<ul>
+<li>Intel代码省略了只是大小的后缀，比如push和mov，ATT则可以是pushq和movq</li>
+<li>Intel省略了寄存器名字前面的“%”符号，用的是rax而不是%rax</li>
+<li>Intel用不同的方式描述内存中的位置，例如“QWORD PTR [rbx]”而不是“(%rbx)”</li>
+<li>在带有多操作数的指令中操作数的顺序问题，二者是相反的。</li>
+</ul>
+<h2 id="数据格式"><a class="header" href="#数据格式">数据格式</a></h2>
+<p>从十六位扩展到三十二位的，Intel用“字”（word）来表示十六位数据类型，三十二位数称为“双字”（double words），六十四位数称为“四字”（quad words）。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">C声明</th><th style="text-align: center">Intel数据类型</th><th style="text-align: center">汇编代码后缀</th><th style="text-align: center">大小（字节）</th></tr></thead><tbody>
+<tr><td style="text-align: center">char</td><td style="text-align: center">字节</td><td style="text-align: center">b</td><td style="text-align: center">1</td></tr>
+<tr><td style="text-align: center">short</td><td style="text-align: center">字</td><td style="text-align: center">w</td><td style="text-align: center">2</td></tr>
+<tr><td style="text-align: center">int</td><td style="text-align: center">双字</td><td style="text-align: center">l</td><td style="text-align: center">4</td></tr>
+<tr><td style="text-align: center">long</td><td style="text-align: center">四字</td><td style="text-align: center">q</td><td style="text-align: center">8</td></tr>
+<tr><td style="text-align: center">char*</td><td style="text-align: center">四字</td><td style="text-align: center">q</td><td style="text-align: center">8</td></tr>
+<tr><td style="text-align: center">float</td><td style="text-align: center">单精度</td><td style="text-align: center">s</td><td style="text-align: center">4</td></tr>
+<tr><td style="text-align: center">double</td><td style="text-align: center">双精度</td><td style="text-align: center">l</td><td style="text-align: center">8</td></tr>
+</tbody></table>
+</div>
+<h3 id="操作数指示符"><a class="header" href="#操作数指示符">操作数指示符</a></h3>
+<p>不同的操作数可以分为三个类型，立即数用来表示常数值，寄存器和内存引用</p>
+<p>立即数是$后面跟一个整数，比如$52，$-12这样</p>
+<p>寄存器表示的某个寄存器的内容，这里用r<sub>a</sub>来表示寄存器a，引用R[r<sub>a</sub>]表示这个寄存器的值</p>
+<p>内存引用会根据计算出来的地址访问某个内存位置，这里用M<sub>b</sub>[Addr]表示对存储在内存中从地址Addr开始的b个字节的引用，为了方便通常会省略b</p>
+<p>有多种不同的寻址模式如下表（s这个比例因子必须是1、2、4或8）:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">类型</th><th style="text-align: center">格式</th><th style="text-align: center">操作数值</th><th style="text-align: center">名称</th></tr></thead><tbody>
+<tr><td style="text-align: center">立即数</td><td style="text-align: center">$Imm</td><td style="text-align: center">Imm</td><td style="text-align: center">立即数寻址</td></tr>
+<tr><td style="text-align: center">寄存器</td><td style="text-align: center">r<sub>a</sub></td><td style="text-align: center">R[r<sub>a</sub>]</td><td style="text-align: center">寄存器寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">Imm</td><td style="text-align: center">M[Imm]</td><td style="text-align: center">绝对寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">(r<sub>a</sub>)</td><td style="text-align: center">M[R[r<sub>a</sub>]]</td><td style="text-align: center">间接寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">Imm(r<sub>b</sub>)</td><td style="text-align: center">M[Imm+R[r<sub>a</sub>]]</td><td style="text-align: center">（基址+偏移量）寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">(r<sub>a</sub>, r_b$)</td><td style="text-align: center">M[R[r<sub>a</sub>]+R[r<sub>b</sub>]]</td><td style="text-align: center">变址寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">Imm(r<sub>a</sub>, r_b$)</td><td style="text-align: center">M[Imm+R[r<sub>a</sub>]+R[r<sub>b</sub>]]</td><td style="text-align: center">变址寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">(, r<sub>a</sub>, s)</td><td style="text-align: center">M[R[r<sub>a</sub>]*s]</td><td style="text-align: center">比例变址寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">Imm(, r<sub>b</sub>, s)</td><td style="text-align: center">M[Imm+R[r<sub>a</sub>]*s]</td><td style="text-align: center">比例变址寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">(r<sub>a</sub>, r<sub>b</sub>, s)</td><td style="text-align: center">M[R[r<sub>a</sub>]+R[r<sub>b</sub>]*s]</td><td style="text-align: center">比例变址寻址</td></tr>
+<tr><td style="text-align: center">存储器</td><td style="text-align: center">Imm(r<sub>a</sub>, r<sub>b</sub>, s)</td><td style="text-align: center">M[Imm+R[r<sub>a</sub>]+R[r<sub>a</sub>]*s]</td><td style="text-align: center">比例变址寻址</td></tr>
+</tbody></table>
+</div>
+<h3 id="数据传送指令"><a class="header" href="#数据传送指令">数据传送指令</a></h3>
+<h4 id="mov类"><a class="header" href="#mov类">mov类</a></h4>
+<p>mov指令就是把数据从源位置复制到目的位置，mov类包括movb、movw、movl、movq和movabsq五个指令，区别在于操作的数据大小不同，分别是1、2、4、8字节，movabsq也是八字节。</p>
+<p><code>mov S, D  ;D&lt;-S</code></p>
+<p>x86_64加了一条限制：传送指令的两个操作数不能同时指向内存，这种功能的实现只能由两条指令来实现——先把数据复制到寄存器中。</p>
+<p>大多数情况下，mov指令只会更新目的操作数指定的寄存器字节或内存位置，但是movl指令以寄存器作为目的的时候，它会把寄存器的高4位字节设置为0。这是因为x86-64采用的惯例——任何为寄存器生成32位值的 指令都会把该寄存器的高位设置为0。</p>
+<p>常规的movq只能表示为32位补码数字的立即数为源操作数，然后把这个值符号扩展得到64位的值，放到目的位置。movabsq能够以任意的64位立即数作为源操作数，并且只能以寄存器作为目的。</p>
+<h4 id="movz类"><a class="header" href="#movz类">movz类</a></h4>
+<p>movz用于将较小的值复制到较大的目的时使用，包括movzbw、movzbl、movzbq、movzwl和movzwq五个指令，每条指令最后两个字符是大小指示符，第一个字符指定了源的大小，第二个指明目的的大小。</p>
+<h4 id="movs类"><a class="header" href="#movs类">movs类</a></h4>
+<p>movs用于将较小的值复制到较大的目的时使用，包括movsbw、movsbl、movsbq、movswl和movswq五个指令，每条指令最后两个字符是大小指示符，第一个字符指定了源的大小，第二个指明目的的大小。</p>
+<h4 id="movz和movs的异同"><a class="header" href="#movz和movs的异同">movz和movs的异同</a></h4>
+<p>movz和movq都用于将数据从寄存器或内存复制到目的寄存器</p>
+<p>movz类的指令会把目的剩余的字节填充为0，而movs类的指令通过符号扩展填充</p>
+<p>符号扩展就是把剩余的字节设为全1或全0，例如：</p>
+<pre><code class="language-asm">movabsq $0x0011223344556677, %rax ;%rax = 0011223344556677
+movb $0xAA %dl ;%dl = AA
+movb %dl, %al ;%rax = 00112233445566AA
+movsbq %dl, %rax ;%rax = FFFFFFFFFFFFFFAA
+movzbq %dl, %rax ;%rax = 00000000000000AA
+</code></pre>
+<p>可以看到，由于十六进制A二进制表示是1010，符号扩展就会把高位字节都设置为二进制的1，也就是都设置为F</p>
+<h3 id="压入和弹出栈数据"><a class="header" href="#压入和弹出栈数据">压入和弹出栈数据</a></h3>
+<p>栈是一种数据结构，遵循后入先出的原则，通过push指令把数据压入栈中，通过pop指令把数据弹出栈。栈可以看作一个数组，总是从数组的一端压入和弹出元素，这一端称为栈顶，x86-64中，程序栈存放在内存的某个区域。如下图所示，栈向下增长，栈顶元素的地址是所有栈中元素地址最低的，栈指针%rsp保存着栈顶元素的地址。
+pushq指令的功能是把数据压入栈，将一个八字节的值压入栈中，首先要将栈指针减8，然后将值写到新的栈顶地址，所以<code>pushq %rbp</code>等价于下边两条指令：</p>
+<pre><code class="language-asm">sub $8, %rsp
+mov %rbp, (%rsp)
+</code></pre>
+<p><img src="img/%E8%B0%83%E7%94%A8%E6%A0%88%E5%B8%A7.png" alt="压栈" /></p>
+<p>上图前两栏是当%rsp为0x108,%rax为0x123时，执行指令<code>pushq %rax</code>的效果第三栏说明的是执行完pushq后立即执行指令<code>popq %rdx</code>的效果，先从内存中读出0x123，再写入寄存器%rdx中，然后%rsp值增加会0x108。但是如图所示，0x123仍然存在于内存位置0x100中，直到被覆盖。</p>
+<h2 id="算数和逻辑操作"><a class="header" href="#算数和逻辑操作">算数和逻辑操作</a></h2>
+<p>一元操作的指令有inc、dec、neg和not，含义分别为+1、-1、取负和取补。</p>
+<p>涉及到基础运算的有add、sub、imul、xor、or和and，含义分别为加减乘、异或、或和与。</p>
+<p>移位运算是sal、shl、sar和shr，前两个都是左移，sar是算数右移，shr是逻辑右移。</p>
+<p>加载有效地址是leap。</p>
+<h3 id="加载有效地址"><a class="header" href="#加载有效地址">加载有效地址</a></h3>
+<p>加载有效地址指令leap实际上就是movq指令的变形，它的指令形式是从内存读取数据到寄存器，但实际上它根本没有引用内存。它的第一个操作数看上去是一个内存引用，实际上并不是从指定的位置读入数据，而是将地址写入目的操作数。</p>
+<p>这条指令可以为后面的内存引用产生指针，可以简洁地描述普通算术操作，例如%rdx的值是x，那么<code>leaq 7(%rdx, %rdx, 4), %rax</code>就是设置寄存器%rax的值为5x+7。</p>
+<pre><code class="language-C">long scale(long x, long y, long z)
+{
+	long t = x + 4 * y + 12 * z;
+	return t;
+}
+</code></pre>
+<p>编译时，这个函数的算术运算由三条leaq指令实现：</p>
+<pre><code class="language-asm">;long scale(long x, long y, long z)
+;x in %rdi, y in %rsi, z in %rdx
+scale:
+	leaq (%rdi, %rsi, 4), %rax ;x+4*y
+	leaq (%rdx, %rdx, 2), %rdx ;3*z
+	leaq (%rax, %rdx, 4), %rax ;x+4*y +4*3z = x + 4 * y + 12 * z
+	ret
+</code></pre>
+<h3 id="一元操作和二元操作"><a class="header" href="#一元操作和二元操作">一元操作和二元操作</a></h3>
+<p>一元操作这些指令只有一个操作数，既是源操作数也是目的操作数</p>
+<p>二元操作的第二个操作数既是源操作数也是目的操作数，例如</p>
+<pre><code class="language-asm">sub %rcx, %rax
+</code></pre>
+<p>这个指令的含义就是<code>%rax = %rax - %rcx</code>，其他的同理</p>
+<h3 id="移位操作"><a class="header" href="#移位操作">移位操作</a></h3>
+<p>移位操作第一个是移位量，第二个是要移位的数据。移位量可以是一个立即数，或者放在单字节寄存器%cl中。</p>
+<p>左移指令有两个，sal和shl，二者效果相同，都是将右边填0。右移则分为sar（算数移位）和shr（逻辑移位）</p>
+<h2 id="控制"><a class="header" href="#控制">控制</a></h2>
+<h3 id="条件码"><a class="header" href="#条件码">条件码</a></h3>
+<p>除了整数寄存器，CPU维护着一组单个位的条件码寄存器，它们描述了最近的算术或逻辑操作的属性。常用的状态码有：</p>
+<ul>
+<li>CF：进位标志，最近操作使得最高位产生了进位，可以用来检查无符号操作的溢出</li>
+<li>ZF：零标志，最近的操作得出的结果为0</li>
+<li>SF：符号标志，最近的操作得到的结果为负数</li>
+<li>OF：溢出标志，最近的操作导致一个补码溢出——正溢出或负溢出</li>
+</ul>
+<p>leaq指令不改变任何条件码，它只用来进行地址计算。除此之外，上述指令都会设置条件码。对于逻辑操作，例如xor的进位标志和溢出标志会被设置为0，对于移位操作，进位标志将设置为最后一个被移出的位。inc和dec指令会设置溢出和零标志，但不会改变进位标志。
+除了上述指令还有两种指令只设置条件码不改变任何寄存器——cmp和test指令。</p>
+<p>cmp类有四种指令，分别对应四中数据格式。cmp指令的行为和sub保持一致。如果两个值相等，零标志位会被设置为1，其他标志可以用来确定两个操作数之间的大小关系。</p>
+<p>test类指令和and指令的行为一致。</p>
+<h3 id="访问条件码"><a class="header" href="#访问条件码">访问条件码</a></h3>
+<p>条件码不可被直接读取，一下是三种常用方法：</p>
+<ul>
+<li>根据条件码的某种组合，将一个字节设置为0或者1</li>
+<li>可以条件跳转到程序的某个其他的部分</li>
+<li>可以有条件地传送数据</li>
+</ul>
+<p>set类指令可以格局条件码的某种组合将一个字节设置为0或1，set类指令的区别在于它们考虑的条件码的组合是什么，这些指令名字的不同后缀指明了它们所考虑的条件码的组合而不是数据类型的种类。下边是这些指令：</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">指令</th><th style="text-align: center">同义名</th><th style="text-align: center">效果</th><th style="text-align: center">设置条件</th></tr></thead><tbody>
+<tr><td style="text-align: center">sete D</td><td style="text-align: center">setz</td><td style="text-align: center">D &lt;—— ZF</td><td style="text-align: center">相等/零</td></tr>
+<tr><td style="text-align: center">setne D</td><td style="text-align: center">setnz</td><td style="text-align: center">D &lt;—— ZF</td><td style="text-align: center">不等/非零</td></tr>
+<tr><td style="text-align: center">sets D</td><td style="text-align: center"></td><td style="text-align: center">D &lt;—— SF</td><td style="text-align: center">负数</td></tr>
+<tr><td style="text-align: center">setns D</td><td style="text-align: center"></td><td style="text-align: center">D &lt;—— ~SF</td><td style="text-align: center">非负数</td></tr>
+<tr><td style="text-align: center">setg D</td><td style="text-align: center">setnle</td><td style="text-align: center">D &lt;—— ~(SF^OF)&amp;~ZF</td><td style="text-align: center">大于</td></tr>
+<tr><td style="text-align: center">setge D</td><td style="text-align: center">setnl</td><td style="text-align: center">D &lt;—— ~(SF^OF)</td><td style="text-align: center">大于等于</td></tr>
+<tr><td style="text-align: center">setl D</td><td style="text-align: center">setnge</td><td style="text-align: center">D &lt;—— SF^OF</td><td style="text-align: center">小于</td></tr>
+<tr><td style="text-align: center">setle D</td><td style="text-align: center">setng</td><td style="text-align: center">D &lt;—— (SF^OF) | ZF</td><td style="text-align: center">小于等于</td></tr>
+<tr><td style="text-align: center">seta D</td><td style="text-align: center">setnbe</td><td style="text-align: center">D &lt;—— ~CF &amp; ~ZF</td><td style="text-align: center">超过</td></tr>
+<tr><td style="text-align: center">setae D</td><td style="text-align: center">setnb</td><td style="text-align: center">D &lt;—— ~CF</td><td style="text-align: center">超过或相等</td></tr>
+<tr><td style="text-align: center">setb D</td><td style="text-align: center">setnae</td><td style="text-align: center">D &lt;—— CF</td><td style="text-align: center">低于</td></tr>
+<tr><td style="text-align: center">setbe D</td><td style="text-align: center">setna</td><td style="text-align: center">D &lt;—— CF |  ZF</td><td style="text-align: center">低于或相等</td></tr>
+</tbody></table>
+</div>
+<p>某种底层的机器指令有很多个名字，称之为同义名。编译器和反汇编器可以随意决定采用哪个名字。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">指令</th><th style="text-align: center">同义名</th><th style="text-align: center">传送条件</th><th style="text-align: left">描述</th></tr></thead><tbody>
+<tr><td style="text-align: center">cmove S, R</td><td style="text-align: center">cmovz</td><td style="text-align: center">ZF</td><td style="text-align: left">相等</td></tr>
+<tr><td style="text-align: center">cmovne S, R</td><td style="text-align: center">cmovnz</td><td style="text-align: center">~ZF</td><td style="text-align: left">不相等</td></tr>
+<tr><td style="text-align: center">cmovs S, R</td><td style="text-align: center"></td><td style="text-align: center">SF</td><td style="text-align: left">负数</td></tr>
+<tr><td style="text-align: center">cmovns S, R</td><td style="text-align: center"></td><td style="text-align: center">~SF</td><td style="text-align: left">非负数</td></tr>
+<tr><td style="text-align: center">comvg S, R</td><td style="text-align: center">cmovle</td><td style="text-align: center">~(SF^OF) &amp; ~ZF</td><td style="text-align: left">大于</td></tr>
+<tr><td style="text-align: center">cmovge S, R</td><td style="text-align: center">cmovnl</td><td style="text-align: center">~(SF^OF)</td><td style="text-align: left">大于或等于</td></tr>
+<tr><td style="text-align: center">cmovl S, R</td><td style="text-align: center">cmovnge</td><td style="text-align: center">SF^OF</td><td style="text-align: left">小于</td></tr>
+<tr><td style="text-align: center">cmovle S, R</td><td style="text-align: center">cmovng</td><td style="text-align: center">(SF^OF) | ZF</td><td style="text-align: left">小于或等于</td></tr>
+<tr><td style="text-align: center">cmova S, R</td><td style="text-align: center">cmovnbe</td><td style="text-align: center">~CF &amp; ~ZF</td><td style="text-align: left">超过</td></tr>
+<tr><td style="text-align: center">cmovae S, R</td><td style="text-align: center">cmovnb</td><td style="text-align: center">~CF</td><td style="text-align: left">超过或相等</td></tr>
+<tr><td style="text-align: center">cmovb S, R</td><td style="text-align: center">cmovnae</td><td style="text-align: center">CF</td><td style="text-align: left">低于</td></tr>
+<tr><td style="text-align: center">cmovbe S, R</td><td style="text-align: center">cmovna</td><td style="text-align: center">CF | ZF</td><td style="text-align: left">低于或等于</td></tr>
+</tbody></table>
+</div>
+<h3 id="跳转指令"><a class="header" href="#跳转指令">跳转指令</a></h3>
+<p>汇编代码中，跳转的目的地通常用一个标号（label）指明，例如：</p>
+<pre><code class="language-asm">    movq $0, %rax
+    jmp .L1
+    movq (%rax), %rdx
+.L1:
+	popq %rdx
+</code></pre>
+<p>jmp指令是无条件跳转，这可以是直接跳转，即目标作为指令的一部分编码，也可以是间接跳转，即跳转目标是从寄存器或内存位置读出的。例如：</p>
+<pre><code class="language-asm">jmp *%rax   ;内存操作数作为跳转目标
+jmp *(%rax) ;寄存器%rax的值作为跳转目标
+</code></pre>
+<p>下表是有条件的跳转指令，他们根据条件码的某种组合来决定是否进行跳转，如果不符合就往下执行，符合就跳转。代码名字和set指令有所类似。</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center">指令</th><th style="text-align: center">同义名</th><th style="text-align: center">跳转条件</th><th style="text-align: center">描述</th></tr></thead><tbody>
+<tr><td style="text-align: center">jmp Label</td><td style="text-align: center"></td><td style="text-align: center">1</td><td style="text-align: center">直接跳转</td></tr>
+<tr><td style="text-align: center">jmp *Opreand</td><td style="text-align: center"></td><td style="text-align: center">1</td><td style="text-align: center">间接跳转</td></tr>
+<tr><td style="text-align: center">je Label</td><td style="text-align: center">jz</td><td style="text-align: center">ZF</td><td style="text-align: center">相等/零</td></tr>
+<tr><td style="text-align: center">jne Label</td><td style="text-align: center">jnz</td><td style="text-align: center">~ZF</td><td style="text-align: center">不相等/非零</td></tr>
+<tr><td style="text-align: center">js</td><td style="text-align: center">Label</td><td style="text-align: center"></td><td style="text-align: center">SF</td></tr>
+<tr><td style="text-align: center">jns Label</td><td style="text-align: center"></td><td style="text-align: center">~SF</td><td style="text-align: center">非负数</td></tr>
+<tr><td style="text-align: center">jg Label</td><td style="text-align: center">jnle</td><td style="text-align: center">~(SF^OF) &amp; ~ZF</td><td style="text-align: center">大于</td></tr>
+<tr><td style="text-align: center">jge Label</td><td style="text-align: center">jnl</td><td style="text-align: center">~(SF^OF)</td><td style="text-align: center">大于或等于</td></tr>
+<tr><td style="text-align: center">jl Label</td><td style="text-align: center">jnge</td><td style="text-align: center">SF^OF</td><td style="text-align: center">小于</td></tr>
+<tr><td style="text-align: center">jle Label</td><td style="text-align: center">jng</td><td style="text-align: center">(SF^OF) | ZF</td><td style="text-align: center">小于或等于</td></tr>
+<tr><td style="text-align: center">ja Label</td><td style="text-align: center">jnbe</td><td style="text-align: center">~CF &amp; ~ZF</td><td style="text-align: center">大于</td></tr>
+<tr><td style="text-align: center">jae Label</td><td style="text-align: center">jnb</td><td style="text-align: center">~CF</td><td style="text-align: center">大于或等于</td></tr>
+<tr><td style="text-align: center">jb Label</td><td style="text-align: center">jnae</td><td style="text-align: center">CF</td><td style="text-align: center">低于</td></tr>
+<tr><td style="text-align: center">jbe Label</td><td style="text-align: center">jna</td><td style="text-align: center">CF | ZF</td><td style="text-align: center">低于或等于</td></tr>
+</tbody></table>
+</div>
+<h1 id="实际代码讲解"><a class="header" href="#实际代码讲解">实际代码讲解</a></h1>
+<p>我这里使用objdump工具反汇编刚刚这个datatype。</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; objdump -d datatype
+
+datatype：     文件格式 elf64-x86-64
+
+
+Disassembly of section .init:
+
+0000000000001000 &lt;_init&gt;:
+    1000:       f3 0f 1e fa             endbr64
+    1004:       48 83 ec 08             sub    $0x8,%rsp
+    1008:       48 8b 05 c1 2f 00 00    mov    0x2fc1(%rip),%rax        # 3fd0 &lt;__gmon_start__@Base&gt;
+    100f:       48 85  c0                test   %rax,%rax
+    1012:       74 02                   je     1016 &lt;_init+0x16&gt;
+    1014:       ff d0                   call   *%rax
+    1016:       48 83 c4 08             add    $0x8,%rsp
+    101a:       c3                      ret
+
+Disassembly of section .plt:
+
+0000000000001020 &lt;printf@plt-0x10&gt;:
+    1020:       ff 35 ca 2f 00 00       push   0x2fca(%rip)        # 3ff0 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;
+    1026:       ff 25 cc 2f 00 00       jmp    *0x2fcc(%rip)        # 3ff8 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;
+    102c:       0f 1f 40 00             nopl   0x0(%rax)
+
+0000000000001030 &lt;printf@plt&gt;:
+    1030:       ff 25 ca 2f 00 00       jmp    *0x2fca(%rip)        # 4000 &lt;printf@GLIBC_2.2.5&gt;
+    1036:       68 00 00 00 00          push   $0x0
+    103b:       e9 e0 ff ff ff          jmp    1020 &lt;_init+0x20&gt;
+
+Disassembly of section .text:
+
+0000000000001040 &lt;_start&gt;:
+    1040:       f3 0f 1e fa             endbr64
+    1044:       31 ed                   xor    %ebp,%ebp
+    1046:       49 89 d1                mov    %rdx,%r9
+    1049:       5e                      pop    %rsi
+    104a:       48 89 e2                mov    %rsp,%rdx
+    104d:       48 83 e4 f0             and    $0xfffffffffffffff0,%rsp
+    1051:       50                      push   %rax
+    1052:       54                      push   %rsp
+    1053:       45 31 c0                xor    %r8d,%r8d
+    1056:       31 c9                   xor    %ecx,%ecx
+    1058:       48 8d 3d da 00 00 00    lea    0xda(%rip),%rdi        # 1139 &lt;main&gt;
+    105f:       ff 15 5b 2f 00 00       call   *0x2f5b(%rip)        # 3fc0 &lt;__libc_start_main@GLIBC_2.34&gt;
+    1065:       f4                      hlt
+    1066:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
+    106d:       00 00 00
+    1070:       48 8d 3d a1 2f 00 00    lea    0x2fa1(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
+    1077:       48 8d 05 9a 2f 00 00    lea    0x2f9a(%rip),%rax        # 4018 &lt;__TMC_END__&gt;
+    107e:       48 39 f8                cmp    %rdi,%rax
+    1081:       74 15                   je     1098 &lt;_start+0x58&gt;
+    1083:       48 8b 05 3e 2f 00 00    mov    0x2f3e(%rip),%rax        # 3fc8 &lt;_ITM_deregisterTMCloneTable@Base&gt;
+    108a:       48 85 c0                test   %rax,%rax
+    108d:       74 09                   je     1098 &lt;_start+0x58&gt;
+    108f:       ff e0                   jmp    *%rax
+    1091:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
+    1098:       c3                      ret
+    1099:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
+    10a0:       48 8d 3d 71 2f 00 00    lea    0x2f71(%rip),%rdi        # 4018 &lt;__TMC_END__&gt;
+    10a7:       48 8d 35 6a 2f 00 00    lea    0x2f6a(%rip),%rsi        # 4018 &lt;__TMC_END__&gt;
+    10ae:       48 29 fe                sub    %rdi,%rsi
+    10b1:       48 89 f0                mov    %rsi,%rax
+    10b4:       48 c1 ee 3f             shr    $0x3f,%rsi
+    10b8:       48 c1 f8 03             sar    $0x3,%rax
+    10bc:       48 01 c6                add    %rax,%rsi
+    10bf:       48 d1 fe                sar    %rsi
+    10c2:       74 14                   je     10d8 &lt;_start+0x98&gt;
+    10c4:       48 8b 05 0d 2f 00 00    mov    0x2f0d(%rip),%rax        # 3fd8 &lt;_ITM_registerTMCloneTable@Base&gt;
+    10cb:       48 85 c0                test   %rax,%raxc0                test   %rax,%rax
+    1012:       74 02                   je     1016 &lt;_init+0x16&gt;
+    1014:       ff d0                   call   *%rax
+    1016:       48 83 c4 08             add    $0x8,%rsp
+    101a:       c3                      ret
+
+    10ce:       74 08                   je     10d8 &lt;_start+0x98&gt;
+    10d0:       ff e0                   jmp    *%rax
+    10d2:       66 0f 1f 44 00 00       nopw   0x0(%rax,%rax,1)
+    10d8:       c3                      ret
+    10d9:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
+    10e0:       f3 0f 1e fa             endbr64
+    10e4:       80 3d 2d 2f 00 00 00    cmpb   $0x0,0x2f2d(%rip)        # 4018 &lt;__TMC_END__&gt;
+    10eb:       75 33                   jne    1120 &lt;_start+0xe0&gt;
+    10ed:       55                      push   %rbp
+    10ee:       48 83 3d ea 2e 00 00    cmpq   $0x0,0x2eea(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
+    10f5:       00
+    10f6:       48 89 e5                mov    %rsp,%rbp
+    10f9:       74 0d                   je     1108 &lt;_start+0xc8&gt;
+    10fb:       48 8b 3d 0e 2f 00 00    mov    0x2f0e(%rip),%rdi        # 4010 &lt;__dso_handle&gt;
+    1102:       ff 15 d8 2e 00 00       call   *0x2ed8(%rip)        # 3fe0 &lt;__cxa_finalize@GLIBC_2.2.5&gt;
+    1108:       e8 63 ff ff ff          call   1070 &lt;_start+0x30&gt;
+    110d:       c6 05 04 2f 00 00 01    movb   $0x1,0x2f04(%rip)        # 4018 &lt;__TMC_END__&gt;
+    1114:       5d                      pop    %rbp
+    1115:       c3                      ret
+    1116:       66 2e 0f 1f 84 00 00    cs nopw 0x0(%rax,%rax,1)
+    111d:       00 00 00
+    1120:       c3                      ret
+    1121:       66 66 2e 0f 1f 84 00    data16 cs nopw 0x0(%rax,%rax,1)
+    1128:       00 00 00 00
+    112c:       0f 1f 40 00             nopl   0x0(%rax)
+    1130:       f3 0f 1e fa             endbr64
+    1134:       e9 67 ff ff ff          jmp    10a0 &lt;_start+0x60&gt;
+
+0000000000001139 &lt;main&gt;:
+    1139:       55                      push   %rbp
+    113a:       48 89 e5                mov    %rsp,%rbp
+    113d:       48 83 ec 10             sub    $0x10,%rsp
+    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
+    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
+    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
+    1153:       00
+    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
+    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
+    115c:       89 c6                   mov    %eax,%esi
+    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
+    1165:       48 89 c7                mov    %rax,%rdi
+    1168:       b8 00 00 00 00          mov    $0x0,%eax
+    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
+    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
+    1176:       89 c6                   mov    %eax,%esi
+    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
+    117f:       48 89 c7                mov    %rax,%rdi
+    1182:       b8 00 00 00 00          mov    $0x0,%eax
+    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
+    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
+    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
+    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
+    119c:       48 89 c7                mov    %rax,%rdi
+    119f:       b8 01 00 00 00          mov    $0x1,%eax
+    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
+    11a9:       b8 00 00 00 00          mov    $0x0,%eax
+    11ae:       c9                      leave
+    11af:       c3                      ret
+
+Disassembly of section .fini:
+
+00000000000011b0 &lt;_fini&gt;:
+    11b0:       f3 0f 1e fa             endbr64
+    11b4:       48 83 ec 08             sub    $0x8,%rsp
+    11b8:       48 83 c4 08             add    $0x8,%rsp
+    11bc:       c3                      ret
+
+
+</code></pre>
+<p><code>0000000000001139 &lt;main&gt;:</code>是我们编写的main函数的代码产生的汇编代码。其他地方我这里先不过多介绍。</p>
+<pre><code class="language-asm">0000000000001139 &lt;main&gt;:
+    1139:       55                      push   %rbp
+    113a:       48 89 e5                mov    %rsp,%rbp
+    113d:       48 83 ec 10             sub    $0x10,%rsp
+    1141:       c7 45 f4 01 00 00 00    movl   $0x1,-0xc(%rbp)
+    1148:       c6 45 f3 61             movb   $0x61,-0xd(%rbp)
+    114c:       f2 0f 10 05 cc 0e 00    movsd  0xecc(%rip),%xmm0        # 2020 &lt;_IO_stdin_used+0x20&gt;
+    1153:       00
+    1154:       f2 0f 11 45 f8          movsd  %xmm0,-0x8(%rbp)
+    1159:       8b 45 f4                mov    -0xc(%rbp),%eax
+    115c:       89 c6                   mov    %eax,%esi
+    115e:       48 8d 05 a3 0e 00 00    lea    0xea3(%rip),%rax        # 2008 &lt;_IO_stdin_used+0x8&gt;
+    1165:       48 89 c7                mov    %rax,%rdi
+    1168:       b8 00 00 00 00          mov    $0x0,%eax
+    116d:       e8 be fe ff ff          call   1030 &lt;printf@plt&gt;
+    1172:       0f be 45 f3             movsbl -0xd(%rbp),%eax
+    1176:       89 c6                   mov    %eax,%esi
+    1178:       48 8d 05 90 0e 00 00    lea    0xe90(%rip),%rax        # 200f &lt;_IO_stdin_used+0xf&gt;
+    117f:       48 89 c7                mov    %rax,%rdi
+    1182:       b8 00 00 00 00          mov    $0x0,%eax
+    1187:       e8 a4 fe ff ff          call   1030 &lt;printf@plt&gt;
+    118c:       48 8b 45 f8             mov    -0x8(%rbp),%rax
+    1190:       66 48 0f 6e c0          movq   %rax,%xmm0
+    1195:       48 8d 05 7c 0e 00 00    lea    0xe7c(%rip),%rax        # 2018 &lt;_IO_stdin_used+0x18&gt;
+    119c:       48 89 c7                mov    %rax,%rdi
+    119f:       b8 01 00 00 00          mov    $0x1,%eax
+    11a4:       e8 87 fe ff ff          call   1030 &lt;printf@plt&gt;
+    11a9:       b8 00 00 00 00          mov    $0x0,%eax
+    11ae:       c9                      leave
+    11af:       c3                      ret
+</code></pre>
+<p>前两行是调用函数都有的两行，<code>push</code>用来把数据压入栈中。<code>push %rbp</code>就是要将rbp寄存器的值保存到栈上。<code>mov</code>指令用来把一个地方的值复制到另一个地方，<code>mov    %rsp,%rbp</code>就是将rsp寄存器的值复制给rbp寄存器。第一条指令没有生效的时候，rbp保存的还是调用main函数的上一个函数的栈底的地址，<code>push</code>的作用是在将rbp改成main函数栈底之前先将原来的值保存。<code>mov    %rsp,%rbp</code>是将当前栈顶的地址给rbp寄存器，此后rbp寄存器不会变，栈顶会一直变化。</p>
+<p><code>sub</code>指令就是减法，<code>sub    $0x10,%rsp</code>将rsp的值减了0x10，十进制表示16字节，就是给栈多搞出来了16字节的空间。</p>
+<p>第三行的<code>movl</code>是<code>mov</code>指令的变种，用来传递4字节的值。-0xc(%rbp)表达的意思是访问%rbp + -0xc这个地址的值，那么<code>movl   $0x1,-0xc(%rbp)</code>这条指令就是把那个地址放上1这个值，之前rsp减去16给函数栈整出来了16字节的空闲空间，rbp-0xc就是指向rsp+4的位置，对应源代码就知道，这个汇编代码应该对应<code>int a = 1;</code>，而int也正是4字节。第四行的<code> movb   $0x61,-0xd(%rbp)</code>中的<code>movb</code>用来传递1字节，这自然就是定义char变量那行代码的汇编代码，0x61是ASCII码中a字符的十六进制表示。</p>
+<p>后续的汇编代码就不说了，从1159到116d这几行代码这样的为一组就对应一个<code>printf()</code>函数的调用。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="细"><a class="header" href="#细">细🔒</a></h1>
 <p>数组在定义的时候需要说明它的元素个数，若是空着不写无法通过编译器的检查，不过如果编译器版本太低的话倒是可以。不过可以使用<code>malloc()</code>动态分配数组，在内存分配那一节将会说这个。</p>
 <p>C语言没有字符串的概念，如果要实现字符串的话需要使用字符数组。但是数组需要明确说明元素个数，太麻烦了。这里可以使用指针，就像这样：</p>
@@ -838,6 +1023,56 @@ int main(void){
     &lt;code&gt;
 }while(&lt;condition&gt;)
 </code></pre>
+<p>循环的底层表示没有和判断差多少，while和for循环有两种大致格式，这里不介绍do-while循环了，懒得说了。</p>
+<p>示例代码（第一种）：</p>
+<pre><code class="language-C">long fact_while(long n)
+{
+	long result = 1;
+	while(n &gt; 1){
+		result *= n;
+		n = n - 1;
+	}
+	return result;
+}
+</code></pre>
+<pre><code class="language-asm">;n in %rdi
+fact_while:
+	movl $1, %eax
+	jmp .L5
+.L6:
+	imulq %rdi, %rax;
+	subq $1, %rdi
+.L5:
+	cmpq $1, %rdi
+	jg .L6
+	rep; ret
+</code></pre>
+<p>示例代码（第二种）：</p>
+<pre><code class="language-C">long fact_while(long n)
+{
+	long result = 1;
+	while(n &gt; 1){
+		result *= n;
+		n = n - 1;
+	}
+	return result;
+}
+</code></pre>
+<pre><code class="language-asm">;n in %rdi
+fact_while:
+	cmpq $1, %rdi
+	jle .L7
+	movl $1, %eax
+.L6:
+	imulq %rdi, %rax
+	subq $1, %rdi
+	cmpq $1, %rdi
+	jne .L6
+	rep; ret
+.L7:
+	movl $1, %eax
+	ret
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="函数调用"><a class="header" href="#函数调用">函数调用</a></h1>
 <p>函数是对一堆的封装，编写程序很有可能就会遇到一些基本普偏使用的功能，比如打印字符串，这是C语言标准库里就实现好了的函数，直接引入相关头文件再调用就好；还有一些对一些程序来说没那么基本的功能，这就需要自己来实现了。</p>
 <p>函数的使用自然也可以减少程序源代码的行数，增加程序的可读性，也可以让使用者不必在乎函数功能内部的实现逻辑直接拿来就用。</p>
@@ -872,13 +1107,15 @@ int add(int a, int b){
 }
 </code></pre>
 <p>返回值的数据类型就是在第二章中介绍的数据类型了。</p>
-<p>在此顺便介绍一下<code>main()</code>函数的参数：argc和argv。这两个参数的意思是传递给程序的参数的个数和实际参数的值。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="细-1"><a class="header" href="#细-1">细🔒</a></h1>
+<p>在此介绍一下<code>main()</code>函数的参数：argc和argv。这两个参数的意思是传递给程序的参数的个数和实际参数的值。</p>
 <hr />
 <p>如果你没有使用过在终端执行程序，也许很难理解双击执行程序的时候怎么还会有传递参数这种行为。如果是这样的话，我推荐你试一试，不需要GNU/Linux系统，Windows 11自带的Windows Terminal就不错，Win10的话不自带就自己下载吧，你可以在其中执行几个命令试一试。如果你没调整过默认起的话就是是PowerShell，这里介绍几个命令：</p>
 <pre><code class="language-bash">ls #列出当前目录的文件，如果ls后面空格接文件夹的话就列出那个文件夹的文件
 cd #切换目录
 </code></pre>
-<p>这里只介绍了两个命令，我懒了()。如果想要更多的了解，可以访问<a href="https://missing-semester-cn.github.io/">计算机教育中缺失的一课</a></p>
+<p>这里只介绍了两个命令，我懒了()。</p>
+<p>如果想要更多的了解，可以访问<a href="https://missing-semester-cn.github.io/">计算机教育中缺失的一课</a></p>
 <hr />
 <p>下面来一个获取命令行参数的代码：</p>
 <pre><code class="language-c">#include&lt;stdio.h&gt;
