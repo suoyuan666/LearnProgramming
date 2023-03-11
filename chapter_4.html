@@ -70,10 +70,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -81,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html" class="active"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html" class="active"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">5.</strong> I/O操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_6-sp.html"><strong aria-hidden="true">5.1.</strong> 输入输出函数</a></li><li class="chapter-item expanded "><a href="chapter_6-file.html"><strong aria-hidden="true">5.2.</strong> 文件操作函数</a></li><li class="chapter-item expanded "><a href="chapter_6-syscall.html"><strong aria-hidden="true">5.3.</strong> syscall简单介绍</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,7 +159,7 @@
 }
 </code></pre>
 <p>这段代码就是创建了一个<code>add()</code>函数用于加两个数。</p>
-<p>C语言中，如要调用一个函数，如果调用函数在被调用函数之前，虽然还是可以调用的，编译器会报一个Warnning。调用函数中有过有一个变量接受调用函数的返回值，如果类型不对的话，编译器会报error（至少GCC编译器是这样）。但还是推荐先在源代码的前面写上函数声明，这样一个Warnning都没有了。以<code>add()</code>函数为例，函数声明这么写：</p>
+<p>C语言中，如要调用一个函数，如果调用函数在被调用函数之前，虽然还是可以调用的，编译器会报一个Warnning。调用函数中有过有一个变量接受调用函数的返回值，如果类型不对的话，编译器会报error（至少GCC是这样）。但还是推荐先在源代码的前面写上函数声明，这样一个Warnning都没有了。以<code>add()</code>函数为例，函数声明这么写：</p>
 <pre><code class="language-c">int add(int a, int b);
 </code></pre>
 <p>函数声明就是告诉编译器有这么一个函数，不需要具体的函数实现。</p>

@@ -71,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -82,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">5.</strong> I/O操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_6-sp.html"><strong aria-hidden="true">5.1.</strong> 输入输出函数</a></li><li class="chapter-item expanded "><a href="chapter_6-file.html"><strong aria-hidden="true">5.2.</strong> 文件操作函数</a></li><li class="chapter-item expanded "><a href="chapter_6-syscall.html"><strong aria-hidden="true">5.3.</strong> syscall简单介绍</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,6 +150,9 @@
 <p>这里我并不完全局限于一个编程语言，还会说一些其他相关的东西。一定程度上，也可以说是一个缝合的作品罢了()。</p>
 <p>我现在使用的操作系统是GNU/Linux，并不是Windows，对于Windows下如何编译C语言成一个可执行程序这个问题，我的回答是下载<a href="https://visualstudio.microsoft.com/zh-hans/vs/">Visual studio</a>。</p>
 <p>有一些章节最后会有一个细🔒的部分，这是对那一章节的内容的补充说明。</p>
+<p>我对<strong>学习编程</strong>的定位是面向初学者的C语言教程，有一些东西介绍的并不深入，这里给出GNU C的手册：</p>
+<p><a href="https://www.gnu.org/software/gnu-c-manual/gnu-c-manual.html">The GNU C Reference Manual</a></p>
+<p><a href="https://www.gnu.org/software/libc/manual/html_mono/libc.html">The GNU C Library</a></p>
 <h2 id="大纲"><a class="header" href="#大纲">大纲</a></h2>
 <p>本项目主要介绍的是C语言的教程，大体上会讲如下章节：</p>
 <ul>
@@ -171,9 +176,9 @@
 <li>这一章简单介绍一些在程序运行时动态地获取和抛下存储空间。</li>
 </ul>
 </li>
-<li>第五章、文件操作
+<li>第五章、I/O操作
 <ul>
-<li>这一章将介绍如何对文件进行操作。</li>
+<li>这一章将介绍如何进行I/O操作。</li>
 </ul>
 </li>
 <li>...</li>
@@ -1114,7 +1119,7 @@ fact_while:
 }
 </code></pre>
 <p>这段代码就是创建了一个<code>add()</code>函数用于加两个数。</p>
-<p>C语言中，如要调用一个函数，如果调用函数在被调用函数之前，虽然还是可以调用的，编译器会报一个Warnning。调用函数中有过有一个变量接受调用函数的返回值，如果类型不对的话，编译器会报error（至少GCC编译器是这样）。但还是推荐先在源代码的前面写上函数声明，这样一个Warnning都没有了。以<code>add()</code>函数为例，函数声明这么写：</p>
+<p>C语言中，如要调用一个函数，如果调用函数在被调用函数之前，虽然还是可以调用的，编译器会报一个Warnning。调用函数中有过有一个变量接受调用函数的返回值，如果类型不对的话，编译器会报error（至少GCC是这样）。但还是推荐先在源代码的前面写上函数声明，这样一个Warnning都没有了。以<code>add()</code>函数为例，函数声明这么写：</p>
 <pre><code class="language-c">int add(int a, int b);
 </code></pre>
 <p>函数声明就是告诉编译器有这么一个函数，不需要具体的函数实现。</p>
@@ -1286,6 +1291,270 @@ argv[1]: 123
 argv[2]: 56
 argv[3]: si
 
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="io操作"><a class="header" href="#io操作">I/O操作</a></h1>
+<p>本章节将介绍那些简单的I/O (input/output)操作，比如<code>printf()</code>将这样把字符输出在终端上，<code>scanf()</code>可以在终端上读取用户在键盘上的输入，还有一些对文件的操作。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="输入输出函数"><a class="header" href="#输入输出函数">输入输出函数</a></h1>
+<p>这里介绍两个基本的函数：<code>printf()</code>和<code>scanf()</code>。</p>
+<h2 id="printf"><a class="header" href="#printf">printf</a></h2>
+<p>在man-pages下查找<code>printf</code>可以发现它和其他的函数一起出现：</p>
+<pre><code>NAME
+       printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf - formatted output conversion
+
+</code></pre>
+<p>在DESCRIPTION中有关于<code>printf</code>的介绍，当然还有其他的一些函数的：</p>
+<blockquote>
+<p>The  functions  in  the  printf()  family  produce  output according to a format as described below.  The functions printf() and vprintf() write output to stdout, the standard output stream; fprintf() and vfprintf() write output to the given output stream; sprintf(), snprintf(), vsprintf(), and vsnprintf() write to the character string str.</p>
+</blockquote>
+<p>可以看到其中对<code>printf()</code>的介绍——根据一定的格式把输出写到stdout上，这里先介绍一下什么是stdout。</p>
+<p>这个同样可以在man-pages中找到介绍</p>
+<blockquote>
+<p>stdin, stdout, stderr - standard I/O streams</p>
+</blockquote>
+<p>这里介绍了三个std开头的东西，被称为基本I/O流，std就是standard的缩写。</p>
+<p>再看到DESCRIPTION：</p>
+<blockquote>
+<p>Under normal circumstances  every  UNIX program has three streams opened for it when it starts up, one for input, one for output, and one for printing diagnostic or error messages.
+The  input stream is referred to as &quot;standard input&quot;; the output stream is referred to as &quot;standard output&quot;; and the error stream is referred to as &quot;standard error&quot;.  These terms are abbreviated to form the symbols used to refer to these files, namely stdin, stdout, and stderr.</p>
+</blockquote>
+<p>这时候就知道了这仨的作用了，也就知道了<code>printf()</code>为什么写到stdout。stdin、stdout还有stderr是进程打开的前三个文件描述符，文件描述符是一个整数，可以通过创建管道（接下来会介绍）、打开文件、复制文件描述符来创建一个新的文件描述符。</p>
+<p>可以通过strace工具来验证<code>printf()</code>确实是输出到了stdout上：</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; strace ./hello
+execve(&quot;./hello&quot;, [&quot;./hello&quot;], 0x7ffd33390550 /* 84 vars */) = 0
+brk(NULL)                               = 0x5570f9400000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffc23864ae0) = -1 EINVAL (无效的参数)
+access(&quot;/etc/ld.so.preload&quot;, R_OK)      = -1 ENOENT (没有那个文件或目录)
+openat(AT_FDCWD, &quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+newfstatat(3, &quot;&quot;, {st_mode=S_IFREG|0644, st_size=195927, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 195927, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f6657bae000
+close(3)                                = 0
+openat(AT_FDCWD, &quot;/usr/lib/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0P9\2\0\0\0\0\0&quot;..., 832) = 832
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+newfstatat(3, &quot;&quot;, {st_mode=S_IFREG|0755, st_size=1953112, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6657bac000
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+mmap(NULL, 1994096, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f66579c5000
+mmap(0x7f66579e7000, 1417216, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x7f66579e7000
+mmap(0x7f6657b41000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17c000) = 0x7f6657b41000
+mmap(0x7f6657b99000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d4000) = 0x7f6657b99000
+mmap(0x7f6657b9f000, 52592, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f6657b9f000
+close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f66579c3000
+arch_prctl(ARCH_SET_FS, 0x7f6657bad640) = 0
+set_tid_address(0x7f6657bad910)         = 7792
+set_robust_list(0x7f6657bad920, 24)     = 0
+rseq(0x7f6657badf60, 0x20, 0, 0x53053053) = 0
+mprotect(0x7f6657b99000, 16384, PROT_READ) = 0
+mprotect(0x5570f8a3c000, 4096, PROT_READ) = 0
+mprotect(0x7f6657c0f000, 8192, PROT_READ) = 0
+prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+munmap(0x7f6657bae000, 195927)          = 0
+newfstatat(1, &quot;&quot;, {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+getrandom(&quot;\xa3\x5f\x9d\xdb\x6b\xc4\x83\x4b&quot;, 8, GRND_NONBLOCK) = 8
+brk(NULL)                               = 0x5570f9400000
+brk(0x5570f9421000)                     = 0x5570f9421000
+write(1, &quot;success\n&quot;, 8success
+)                = 8
+exit_group(0)                           = ?
++++ exited with 0 +++
+
+</code></pre>
+<p>strace可以跟踪一个程序的系统调用和信号，这个同样在man-pages可以找到。有些GNU/Linux发行版在安装时会安装strace，不过像我使用的Arch Linux并没有，你需要用pacman安装。</p>
+<p>关于操作系统的系统调用，我会在这个章节单列一个小节简单介绍一下，这里可以在最后几行看到：</p>
+<pre><code class="language-bash">write(1, &quot;success\n&quot;, 8success
+)                = 8
+</code></pre>
+<p><code>write()</code>就是用来向指定的文件描述符写入数据，第一个参数就是用来指定文件描述符的，可以看到它确实是向stduot写的success\n。</p>
+<hr />
+<p>不过strace的输出并不是stdout，而是stderr。这里可以用管道来证明，或者其实strace strace也可以。</p>
+<pre><code class="language-bash">strace ./hello | grep write
+</code></pre>
+<p>这里的<code>grep</code>可以在<code>strace ./hello</code>的输出中筛选出有write的数据，可惜是没有用的。</p>
+<p>这是因为管道的实现是把管道左边的进程的stdout和管道右端的进程的stdin连接起来，但是strace并不往stdout写数据，所以grep并没有得到strace的输出。</p>
+<p>可以指定把stderr的输出重定向到stdout：</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; strace ./hello 2&gt;&amp;1 | grep write
+write\(1, &quot;success\n&quot;, 8success
+
+</code></pre>
+<hr />
+<h2 id="scanf"><a class="header" href="#scanf">scanf</a></h2>
+<p>同样放一手man-pages的NAME：</p>
+<blockquote>
+<p>NAME
+scanf, fscanf, vscanf, vfscanf - input FILE format conversion</p>
+</blockquote>
+<p>DESCRIPTION中关于scanf的部分：</p>
+<blockquote>
+<p>The scanf() function reads input from the standard input stream stdin and fscanf() reads input from the stream pointer stream.</p>
+</blockquote>
+<p>如果成功读了，函数的返回值将会返回读取的字节数。</p>
+<p>与<code>printf()</code>会调用<code>write()</code>系统调用类似，<code>scanf()</code>会调用<code>read()</code>系统调用。<code>read()</code>也是三个参数，和<code>write()</code>的参数都差不多。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="文件操作"><a class="header" href="#文件操作">文件操作</a></h1>
+<p>对I/O对操作都借助于FILE这个对象，正如man-pages上对于FILE的描述（ An object type used for streams.）那样。</p>
+<p>若要对文件内容进行修改，就需要先使用<code>fopen()</code>获取一个FILE对象对其进行操作。<code>fopen</code>函数对声明如下：</p>
+<pre><code class="language-c">FILE *fopen(const char *restrict pathname, const char *restrict mode);
+</code></pre>
+<p>下面的这句话摘自man-pages</p>
+<blockquote>
+<p>The fopen() function opens the file whose name is the string pointed to by pathname and associates a stream with it.</p>
+</blockquote>
+<p>参数mode表示以什么方式打开文件，下边是man-pages中对mode各个选择对描述：</p>
+<pre><code>r      Open text file for reading.  The stream is positioned at the beginning of the file.
+
+r+     Open for reading and writing.  The stream is positioned at the beginning of the file.
+
+w      Truncate file to zero length or create text file for writing.  The stream is positioned at the beginning of the file.
+
+w+     Open for reading and writing.  The file is created if it does not exist, otherwise it is truncated.  The stream is positioned at the beginning of the file.
+
+a      Open for appending (writing at end of file).  The file is created if it does not exist.  The stream is positioned at the end of the file.
+
+a+     Open  for reading and appending (writing at end of file).  The file is created if it does not exist.  Output is always appended to the end of the file.  POSIX is silent on what the initial read position is when using this mode.  For
+        glibc, the initial file position for reading is at the beginning of the file, but for Android/BSD/MacOS, the initial file position for reading is at the end of the file.
+</code></pre>
+<p><code>fopen</code>了一个文件并对其操作后需要<code>fclose</code></p>
+<p>这是一个简单的程序，它会在Downloads目录下创建一个file.txt，并写入hello,world。</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void){
+   FILE *fp = fopen (&quot;/home/zuos/Downloads/file.txt&quot;, &quot;w+&quot;);
+   fprintf(fp,&quot;hello,world&quot;);
+   fclose(fp);
+   return(0);
+}
+</code></pre>
+<p>这里可以看到<code>fprintf</code>的另一个用法。</p>
+<p>在GNU/Linux系统中，文件描述符可以在/proc/&lt;pid&gt;/fd中看到，比如下面这样：</p>
+<p><img src="img/file.png" alt="" /></p>
+<p>这里<code>sleep(-1)</code>函数可以让程序在那一行一直停着，方便查看/proc中进程的一些资源</p>
+<p>&amp;&amp;用于连接两条指令，&amp;将前面命令放到后台执行，其中</p>
+<pre><code>[1] 10636
+</code></pre>
+<p>放在后台执行对同时也告诉了用户程序对进程号</p>
+<p>可以直接向文件描述符里面写数据，从而也就能直接写到file.txt里了。</p>
+<p><img src="img/fd.png" alt="" /></p>
+<p>同样，可以使用<code>fscanf</code>来把文件内容输出出来</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void){
+   char *str;
+   FILE *fp = fopen (&quot;/home/zuos/Downloads/file.txt&quot;, &quot;r&quot;);
+   fscanf(fp,&quot;%s&quot;,str);
+   printf(&quot;%s\n&quot;, str);
+   fclose(fp);
+   return(0);
+}
+</code></pre>
+<p>你会在man-pages关于<code>fopen</code>对<code>mode</code>描述中看到：</p>
+<blockquote>
+<p>The  mode string can also include the letter 'b' either as a last character or as a character between the characters in any of the two-character strings described above.  This is strictly for compatibility with ISO C and  has no  effect;  the  'b' is ignored on all POSIX conforming systems, including Linux.  (Other systems may treat text files and binary files differently, and adding the 'b' may be a good idea if you do I/O to a binary file and  expect that your program may be ported to non-UNIX environments.)</p>
+</blockquote>
+<p>C语言将文件分成了两种——文本文件和二进制文件。文本文件和二进制文件自然是有区别的。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="系统调用"><a class="header" href="#系统调用">系统调用</a></h1>
+<p>这里先介绍一下ABI (Application Binary Interface)，也许你曾经会听说过API，但是应该很少听说ABI。ABI译作应用二进制接口，和API不同的是，ABI定义了二进制代码级别的规则，比如寄存器如何使用，参数如何传递等等，它约束了汇编器和链接器的作为。</p>
+<p>操作系统提供了一系列基于ABI的系统调用 (syscall)为应用程序提供各种基本的服务。这些系统调用让应用程序不再需要关注于具体的硬件，只需要调用操作系统提供的syscall即可。</p>
+<p>不同的处理器架构，调用syscall的方法也不一样，比如x86-64中就是执行syscall就行，下面是man-pages中syscall对不同架构的syscall的调用方式的描述：</p>
+<pre><code>       Arch/ABI    Instruction           System  Ret  Ret  Error    Notes
+                                         call #  val  val2
+       ───────────────────────────────────────────────────────────────────
+       alpha       callsys               v0      v0   a4   a3       1, 6
+       arc         trap0                 r8      r0   -    -
+       arm/OABI    swi NR                -       r0   -    -        2
+       arm/EABI    swi 0x0               r7      r0   r1   -
+       arm64       svc #0                w8      x0   x1   -
+       blackfin    excpt 0x0             P0      R0   -    -
+       i386        int $0x80             eax     eax  edx  -
+       ia64        break 0x100000        r15     r8   r9   r10      1, 6
+       loongarch   syscall 0             a7      a0   -    -
+       m68k        trap #0               d0      d0   -    -
+       microblaze  brki r14,8            r12     r3   -    -
+       mips        syscall               v0      v0   v1   a3       1, 6
+       nios2       trap                  r2      r2   -    r7
+       parisc      ble 0x100(%sr2, %r0)  r20     r28  -    -
+       powerpc     sc                    r0      r3   -    r0       1
+       powerpc64   sc                    r0      r3   -    cr0.SO   1
+       riscv       ecall                 a7      a0   a1   -
+       s390        svc 0                 r1      r2   r3   -        3
+       s390x       svc 0                 r1      r2   r3   -        3
+       superh      trapa #31             r3      r0   r1   -        4, 6
+       sparc/32    t 0x10                g1      o0   o1   psr/csr  1, 6
+       sparc/64    t 0x6d                g1      o0   o1   psr/csr  1, 6
+       tile        swint1                R10     R00  -    R01      1
+       x86-64      syscall               rax     rax  rdx  -        5
+       x32         syscall               rax     rax  rdx  -        5
+       xtensa      syscall               a2      a2   -    -
+</code></pre>
+<p>下面是对不同架构的系统调用的参数寄存器的规定：</p>
+<pre><code>       Arch/ABI      arg1  arg2  arg3  arg4  arg5  arg6  arg7  Notes
+       ──────────────────────────────────────────────────────────────
+       alpha         a0    a1    a2    a3    a4    a5    -
+       arc           r0    r1    r2    r3    r4    r5    -
+       arm/OABI      r0    r1    r2    r3    r4    r5    r6
+
+       arm/EABI      r0    r1    r2    r3    r4    r5    r6
+       arm64         x0    x1    x2    x3    x4    x5    -
+       blackfin      R0    R1    R2    R3    R4    R5    -
+       i386          ebx   ecx   edx   esi   edi   ebp   -
+       ia64          out0  out1  out2  out3  out4  out5  -
+       loongarch     a0    a1    a2    a3    a4    a5    a6
+       m68k          d1    d2    d3    d4    d5    a0    -
+       microblaze    r5    r6    r7    r8    r9    r10   -
+       mips/o32      a0    a1    a2    a3    -     -     -     1
+       mips/n32,64   a0    a1    a2    a3    a4    a5    -
+       nios2         r4    r5    r6    r7    r8    r9    -
+       parisc        r26   r25   r24   r23   r22   r21   -
+       powerpc       r3    r4    r5    r6    r7    r8    r9
+       powerpc64     r3    r4    r5    r6    r7    r8    -
+       riscv         a0    a1    a2    a3    a4    a5    -
+       s390          r2    r3    r4    r5    r6    r7    -
+       s390x         r2    r3    r4    r5    r6    r7    -
+       superh        r4    r5    r6    r7    r0    r1    r2
+       sparc/32      o0    o1    o2    o3    o4    o5    -
+       sparc/64      o0    o1    o2    o3    o4    o5    -
+       tile          R00   R01   R02   R03   R04   R05   -
+       x86-64        rdi   rsi   rdx   r10   r8    r9    -
+       x32           rdi   rsi   rdx   r10   r8    r9    -
+       xtensa        a6    a3    a4    a5    a8    a9    -
+
+</code></pre>
+<p>下面写一个不借助<code>printf()</code>实现输出Hello的程序</p>
+<pre><code class="language-asm">.globl _start
+_start:
+  movq $1, %rax
+  movq $1, %rdi
+  movq $mes, %rsi
+  movq $6, %rdx
+  syscall
+  movq $60,  %rax
+  movq $0,  %rdi
+  syscall
+mes: .ascii &quot;Hello\n&quot;
+</code></pre>
+<p>这段汇编代码由GCC编译链接后就可以做到在终端上输出Hello。</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; gcc -c min.S &amp;&amp; ld min.o  -o min
+
+~/CodeProject/C/LP
+&gt; ./min
+Hello
+
+</code></pre>
+<p>这里的ld是链接器，</p>
+<p>这里执行了两个系统调用，第一个是<code>write()</code>系统调用，关于它的执行逻辑是：</p>
+<pre><code class="language-asm">movq $1, %rax
+movq $1, %rdi
+movq $mes, %rsi
+movq $6, %rdx
+syscall
+</code></pre>
+<p>寄存器rax放系统调用号，rdi、rsi、rdx三个寄存器分别存放三个参数，最后执行syscall就可以执行<code>write</code>系统调用了。系统调用号可以通过上网查找或者看本地的&lt;sys/syscall.h&gt;得到。比如GNU/Linux下，syscall.h就存放在/usr/include/sys/syscall.h，该文件会include其他文件并给出注释，就像这样：</p>
+<pre><code class="language-c">/* This file should list the numbers of the system calls the system knows.
+   But instead of duplicating this we use the information available
+   from the kernel sources.  */
+#include &lt;asm/unistd.h&gt;
 </code></pre>
 
                     </main>
