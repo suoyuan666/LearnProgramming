@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>syscall简单介绍 - 学习编程</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">5.</strong> I/O操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_6-sp.html"><strong aria-hidden="true">5.1.</strong> 输入输出函数</a></li><li class="chapter-item expanded "><a href="chapter_6-file.html"><strong aria-hidden="true">5.2.</strong> 文件操作函数</a></li><li class="chapter-item expanded "><a href="chapter_6-syscall.html" class="active"><strong aria-hidden="true">5.3.</strong> syscall简单介绍</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">学习编程</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="系统调用"><a class="header" href="#系统调用">系统调用</a></h1>
+<p>这里先介绍一下ABI (Application Binary Interface)，也许你曾经会听说过API，但是应该很少听说ABI。ABI译作应用二进制接口，和API不同的是，ABI定义了二进制代码级别的规则，比如寄存器如何使用，参数如何传递等等，它约束了汇编器和链接器的作为。</p>
+<p>操作系统提供了一系列基于ABI的系统调用 (syscall)为应用程序提供各种基本的服务。这些系统调用让应用程序不再需要关注于具体的硬件，只需要调用操作系统提供的syscall即可。</p>
+<p>不同的处理器架构，调用syscall的方法也不一样，比如x86-64中就是执行syscall就行，下面是man-pages中syscall对不同架构的syscall的调用方式的描述：</p>
+<pre><code>       Arch/ABI    Instruction           System  Ret  Ret  Error    Notes
+                                         call #  val  val2
+       ───────────────────────────────────────────────────────────────────
+       alpha       callsys               v0      v0   a4   a3       1, 6
+       arc         trap0                 r8      r0   -    -
+       arm/OABI    swi NR                -       r0   -    -        2
+       arm/EABI    swi 0x0               r7      r0   r1   -
+       arm64       svc #0                w8      x0   x1   -
+       blackfin    excpt 0x0             P0      R0   -    -
+       i386        int $0x80             eax     eax  edx  -
+       ia64        break 0x100000        r15     r8   r9   r10      1, 6
+       loongarch   syscall 0             a7      a0   -    -
+       m68k        trap #0               d0      d0   -    -
+       microblaze  brki r14,8            r12     r3   -    -
+       mips        syscall               v0      v0   v1   a3       1, 6
+       nios2       trap                  r2      r2   -    r7
+       parisc      ble 0x100(%sr2, %r0)  r20     r28  -    -
+       powerpc     sc                    r0      r3   -    r0       1
+       powerpc64   sc                    r0      r3   -    cr0.SO   1
+       riscv       ecall                 a7      a0   a1   -
+       s390        svc 0                 r1      r2   r3   -        3
+       s390x       svc 0                 r1      r2   r3   -        3
+       superh      trapa #31             r3      r0   r1   -        4, 6
+       sparc/32    t 0x10                g1      o0   o1   psr/csr  1, 6
+       sparc/64    t 0x6d                g1      o0   o1   psr/csr  1, 6
+       tile        swint1                R10     R00  -    R01      1
+       x86-64      syscall               rax     rax  rdx  -        5
+       x32         syscall               rax     rax  rdx  -        5
+       xtensa      syscall               a2      a2   -    -
+</code></pre>
+<p>下面是对不同架构的系统调用的参数寄存器的规定：</p>
+<pre><code>       Arch/ABI      arg1  arg2  arg3  arg4  arg5  arg6  arg7  Notes
+       ──────────────────────────────────────────────────────────────
+       alpha         a0    a1    a2    a3    a4    a5    -
+       arc           r0    r1    r2    r3    r4    r5    -
+       arm/OABI      r0    r1    r2    r3    r4    r5    r6
+
+       arm/EABI      r0    r1    r2    r3    r4    r5    r6
+       arm64         x0    x1    x2    x3    x4    x5    -
+       blackfin      R0    R1    R2    R3    R4    R5    -
+       i386          ebx   ecx   edx   esi   edi   ebp   -
+       ia64          out0  out1  out2  out3  out4  out5  -
+       loongarch     a0    a1    a2    a3    a4    a5    a6
+       m68k          d1    d2    d3    d4    d5    a0    -
+       microblaze    r5    r6    r7    r8    r9    r10   -
+       mips/o32      a0    a1    a2    a3    -     -     -     1
+       mips/n32,64   a0    a1    a2    a3    a4    a5    -
+       nios2         r4    r5    r6    r7    r8    r9    -
+       parisc        r26   r25   r24   r23   r22   r21   -
+       powerpc       r3    r4    r5    r6    r7    r8    r9
+       powerpc64     r3    r4    r5    r6    r7    r8    -
+       riscv         a0    a1    a2    a3    a4    a5    -
+       s390          r2    r3    r4    r5    r6    r7    -
+       s390x         r2    r3    r4    r5    r6    r7    -
+       superh        r4    r5    r6    r7    r0    r1    r2
+       sparc/32      o0    o1    o2    o3    o4    o5    -
+       sparc/64      o0    o1    o2    o3    o4    o5    -
+       tile          R00   R01   R02   R03   R04   R05   -
+       x86-64        rdi   rsi   rdx   r10   r8    r9    -
+       x32           rdi   rsi   rdx   r10   r8    r9    -
+       xtensa        a6    a3    a4    a5    a8    a9    -
+
+</code></pre>
+<p>下面写一个不借助<code>printf()</code>实现输出Hello的程序</p>
+<pre><code class="language-asm">.globl _start
+_start:
+  movq $1, %rax
+  movq $1, %rdi
+  movq $mes, %rsi
+  movq $6, %rdx
+  syscall
+  movq $60,  %rax
+  movq $0,  %rdi
+  syscall
+mes: .ascii &quot;Hello\n&quot;
+</code></pre>
+<p>这段汇编代码由GCC编译链接后就可以做到在终端上输出Hello。</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; gcc -c min.S &amp;&amp; ld min.o  -o min
+
+~/CodeProject/C/LP
+&gt; ./min
+Hello
+
+</code></pre>
+<p>这里的ld是链接器，</p>
+<p>这里执行了两个系统调用，第一个是<code>write()</code>系统调用，关于它的执行逻辑是：</p>
+<pre><code class="language-asm">movq $1, %rax
+movq $1, %rdi
+movq $mes, %rsi
+movq $6, %rdx
+syscall
+</code></pre>
+<p>寄存器rax放系统调用号，rdi、rsi、rdx三个寄存器分别存放三个参数，最后执行syscall就可以执行<code>write</code>系统调用了。系统调用号可以通过上网查找或者看本地的&lt;sys/syscall.h&gt;得到。比如GNU/Linux下，syscall.h就存放在/usr/include/sys/syscall.h，该文件会include其他文件并给出注释，就像这样：</p>
+<pre><code class="language-c">/* This file should list the numbers of the system calls the system knows.
+   But instead of duplicating this we use the information available
+   from the kernel sources.  */
+#include &lt;asm/unistd.h&gt;
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_6-file.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_6-file.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

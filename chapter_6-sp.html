@@ -1,0 +1,296 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>输入输出函数 - 学习编程</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">5.</strong> I/O操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_6-sp.html" class="active"><strong aria-hidden="true">5.1.</strong> 输入输出函数</a></li><li class="chapter-item expanded "><a href="chapter_6-file.html"><strong aria-hidden="true">5.2.</strong> 文件操作函数</a></li><li class="chapter-item expanded "><a href="chapter_6-syscall.html"><strong aria-hidden="true">5.3.</strong> syscall简单介绍</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">学习编程</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="输入输出函数"><a class="header" href="#输入输出函数">输入输出函数</a></h1>
+<p>这里介绍两个基本的函数：<code>printf()</code>和<code>scanf()</code>。</p>
+<h2 id="printf"><a class="header" href="#printf">printf</a></h2>
+<p>在man-pages下查找<code>printf</code>可以发现它和其他的函数一起出现：</p>
+<pre><code>NAME
+       printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf - formatted output conversion
+
+</code></pre>
+<p>在DESCRIPTION中有关于<code>printf</code>的介绍，当然还有其他的一些函数的：</p>
+<blockquote>
+<p>The  functions  in  the  printf()  family  produce  output according to a format as described below.  The functions printf() and vprintf() write output to stdout, the standard output stream; fprintf() and vfprintf() write output to the given output stream; sprintf(), snprintf(), vsprintf(), and vsnprintf() write to the character string str.</p>
+</blockquote>
+<p>可以看到其中对<code>printf()</code>的介绍——根据一定的格式把输出写到stdout上，这里先介绍一下什么是stdout。</p>
+<p>这个同样可以在man-pages中找到介绍</p>
+<blockquote>
+<p>stdin, stdout, stderr - standard I/O streams</p>
+</blockquote>
+<p>这里介绍了三个std开头的东西，被称为基本I/O流，std就是standard的缩写。</p>
+<p>再看到DESCRIPTION：</p>
+<blockquote>
+<p>Under normal circumstances  every  UNIX program has three streams opened for it when it starts up, one for input, one for output, and one for printing diagnostic or error messages.
+The  input stream is referred to as &quot;standard input&quot;; the output stream is referred to as &quot;standard output&quot;; and the error stream is referred to as &quot;standard error&quot;.  These terms are abbreviated to form the symbols used to refer to these files, namely stdin, stdout, and stderr.</p>
+</blockquote>
+<p>这时候就知道了这仨的作用了，也就知道了<code>printf()</code>为什么写到stdout。stdin、stdout还有stderr是进程打开的前三个文件描述符，文件描述符是一个整数，可以通过创建管道（接下来会介绍）、打开文件、复制文件描述符来创建一个新的文件描述符。</p>
+<p>可以通过strace工具来验证<code>printf()</code>确实是输出到了stdout上：</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; strace ./hello
+execve(&quot;./hello&quot;, [&quot;./hello&quot;], 0x7ffd33390550 /* 84 vars */) = 0
+brk(NULL)                               = 0x5570f9400000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffc23864ae0) = -1 EINVAL (无效的参数)
+access(&quot;/etc/ld.so.preload&quot;, R_OK)      = -1 ENOENT (没有那个文件或目录)
+openat(AT_FDCWD, &quot;/etc/ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) = 3
+newfstatat(3, &quot;&quot;, {st_mode=S_IFREG|0644, st_size=195927, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 195927, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f6657bae000
+close(3)                                = 0
+openat(AT_FDCWD, &quot;/usr/lib/libc.so.6&quot;, O_RDONLY|O_CLOEXEC) = 3
+read(3, &quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0P9\2\0\0\0\0\0&quot;..., 832) = 832
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+newfstatat(3, &quot;&quot;, {st_mode=S_IFREG|0755, st_size=1953112, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f6657bac000
+pread64(3, &quot;\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0&quot;..., 784, 64) = 784
+mmap(NULL, 1994096, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7f66579c5000
+mmap(0x7f66579e7000, 1417216, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x22000) = 0x7f66579e7000
+mmap(0x7f6657b41000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17c000) = 0x7f6657b41000
+mmap(0x7f6657b99000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d4000) = 0x7f6657b99000
+mmap(0x7f6657b9f000, 52592, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f6657b9f000
+close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f66579c3000
+arch_prctl(ARCH_SET_FS, 0x7f6657bad640) = 0
+set_tid_address(0x7f6657bad910)         = 7792
+set_robust_list(0x7f6657bad920, 24)     = 0
+rseq(0x7f6657badf60, 0x20, 0, 0x53053053) = 0
+mprotect(0x7f6657b99000, 16384, PROT_READ) = 0
+mprotect(0x5570f8a3c000, 4096, PROT_READ) = 0
+mprotect(0x7f6657c0f000, 8192, PROT_READ) = 0
+prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+munmap(0x7f6657bae000, 195927)          = 0
+newfstatat(1, &quot;&quot;, {st_mode=S_IFCHR|0600, st_rdev=makedev(0x88, 0x3), ...}, AT_EMPTY_PATH) = 0
+getrandom(&quot;\xa3\x5f\x9d\xdb\x6b\xc4\x83\x4b&quot;, 8, GRND_NONBLOCK) = 8
+brk(NULL)                               = 0x5570f9400000
+brk(0x5570f9421000)                     = 0x5570f9421000
+write(1, &quot;success\n&quot;, 8success
+)                = 8
+exit_group(0)                           = ?
++++ exited with 0 +++
+
+</code></pre>
+<p>strace可以跟踪一个程序的系统调用和信号，这个同样在man-pages可以找到。有些GNU/Linux发行版在安装时会安装strace，不过像我使用的Arch Linux并没有，你需要用pacman安装。</p>
+<p>关于操作系统的系统调用，我会在这个章节单列一个小节简单介绍一下，这里可以在最后几行看到：</p>
+<pre><code class="language-bash">write(1, &quot;success\n&quot;, 8success
+)                = 8
+</code></pre>
+<p><code>write()</code>就是用来向指定的文件描述符写入数据，第一个参数就是用来指定文件描述符的，可以看到它确实是向stduot写的success\n。</p>
+<hr />
+<p>不过strace的输出并不是stdout，而是stderr。这里可以用管道来证明，或者其实strace strace也可以。</p>
+<pre><code class="language-bash">strace ./hello | grep write
+</code></pre>
+<p>这里的<code>grep</code>可以在<code>strace ./hello</code>的输出中筛选出有write的数据，可惜是没有用的。</p>
+<p>这是因为管道的实现是把管道左边的进程的stdout和管道右端的进程的stdin连接起来，但是strace并不往stdout写数据，所以grep并没有得到strace的输出。</p>
+<p>可以指定把stderr的输出重定向到stdout：</p>
+<pre><code class="language-bash">~/CodeProject/C/LP
+&gt; strace ./hello 2&gt;&amp;1 | grep write
+write\(1, &quot;success\n&quot;, 8success
+
+</code></pre>
+<hr />
+<h2 id="scanf"><a class="header" href="#scanf">scanf</a></h2>
+<p>同样放一手man-pages的NAME：</p>
+<blockquote>
+<p>NAME
+scanf, fscanf, vscanf, vfscanf - input FILE format conversion</p>
+</blockquote>
+<p>DESCRIPTION中关于scanf的部分：</p>
+<blockquote>
+<p>The scanf() function reads input from the standard input stream stdin and fscanf() reads input from the stream pointer stream.</p>
+</blockquote>
+<p>如果成功读了，函数的返回值将会返回读取的字节数。</p>
+<p>与<code>printf()</code>会调用<code>write()</code>系统调用类似，<code>scanf()</code>会调用<code>read()</code>系统调用。<code>read()</code>也是三个参数，和<code>write()</code>的参数都差不多。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_6.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="chapter_6-file.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_6.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="chapter_6-file.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

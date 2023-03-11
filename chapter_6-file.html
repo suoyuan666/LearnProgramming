@@ -1,0 +1,259 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>文件操作函数 - 学习编程</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> 概述</a></li><li class="chapter-item expanded "><a href="chapter_2.html"><strong aria-hidden="true">2.</strong> 数据类型介绍</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_2-typidata.html"><strong aria-hidden="true">2.1.</strong> 简单数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-fudata.html"><strong aria-hidden="true">2.2.</strong> 复杂数据类型</a></li><li class="chapter-item expanded "><a href="chapter_2-asm.html"><strong aria-hidden="true">2.3.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_2-xisuo.html"><strong aria-hidden="true">2.4.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_3.html"><strong aria-hidden="true">3.</strong> 程序执行流程的控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_3-if.html"><strong aria-hidden="true">3.1.</strong> 判断</a></li><li class="chapter-item expanded "><a href="chapter_3-circulate.html"><strong aria-hidden="true">3.2.</strong> 循环</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_4.html"><strong aria-hidden="true">4.</strong> 函数调用</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_4-asm.html"><strong aria-hidden="true">4.1.</strong> 汇编介绍</a></li><li class="chapter-item expanded "><a href="chapter_4-xisuo.html"><strong aria-hidden="true">4.2.</strong> 细🔒</a></li></ol></li><li class="chapter-item expanded "><a href="chapter_6.html"><strong aria-hidden="true">5.</strong> I/O操作</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter_6-sp.html"><strong aria-hidden="true">5.1.</strong> 输入输出函数</a></li><li class="chapter-item expanded "><a href="chapter_6-file.html" class="active"><strong aria-hidden="true">5.2.</strong> 文件操作函数</a></li><li class="chapter-item expanded "><a href="chapter_6-syscall.html"><strong aria-hidden="true">5.3.</strong> syscall简单介绍</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">学习编程</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="文件操作"><a class="header" href="#文件操作">文件操作</a></h1>
+<p>对I/O对操作都借助于FILE这个对象，正如man-pages上对于FILE的描述（ An object type used for streams.）那样。</p>
+<p>若要对文件内容进行修改，就需要先使用<code>fopen()</code>获取一个FILE对象对其进行操作。<code>fopen</code>函数对声明如下：</p>
+<pre><code class="language-c">FILE *fopen(const char *restrict pathname, const char *restrict mode);
+</code></pre>
+<p>下面的这句话摘自man-pages</p>
+<blockquote>
+<p>The fopen() function opens the file whose name is the string pointed to by pathname and associates a stream with it.</p>
+</blockquote>
+<p>参数mode表示以什么方式打开文件，下边是man-pages中对mode各个选择对描述：</p>
+<pre><code>r      Open text file for reading.  The stream is positioned at the beginning of the file.
+
+r+     Open for reading and writing.  The stream is positioned at the beginning of the file.
+
+w      Truncate file to zero length or create text file for writing.  The stream is positioned at the beginning of the file.
+
+w+     Open for reading and writing.  The file is created if it does not exist, otherwise it is truncated.  The stream is positioned at the beginning of the file.
+
+a      Open for appending (writing at end of file).  The file is created if it does not exist.  The stream is positioned at the end of the file.
+
+a+     Open  for reading and appending (writing at end of file).  The file is created if it does not exist.  Output is always appended to the end of the file.  POSIX is silent on what the initial read position is when using this mode.  For
+        glibc, the initial file position for reading is at the beginning of the file, but for Android/BSD/MacOS, the initial file position for reading is at the end of the file.
+</code></pre>
+<p><code>fopen</code>了一个文件并对其操作后需要<code>fclose</code></p>
+<p>这是一个简单的程序，它会在Downloads目录下创建一个file.txt，并写入hello,world。</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void){
+   FILE *fp = fopen (&quot;/home/zuos/Downloads/file.txt&quot;, &quot;w+&quot;);
+   fprintf(fp,&quot;hello,world&quot;);
+   fclose(fp);
+   return(0);
+}
+</code></pre>
+<p>这里可以看到<code>fprintf</code>的另一个用法。</p>
+<p>在GNU/Linux系统中，文件描述符可以在/proc/&lt;pid&gt;/fd中看到，比如下面这样：</p>
+<p><img src="img/file.png" alt="" /></p>
+<p>这里<code>sleep(-1)</code>函数可以让程序在那一行一直停着，方便查看/proc中进程的一些资源</p>
+<p>&amp;&amp;用于连接两条指令，&amp;将前面命令放到后台执行，其中</p>
+<pre><code>[1] 10636
+</code></pre>
+<p>放在后台执行对同时也告诉了用户程序对进程号</p>
+<p>可以直接向文件描述符里面写数据，从而也就能直接写到file.txt里了。</p>
+<p><img src="img/fd.png" alt="" /></p>
+<p>同样，可以使用<code>fscanf</code>来把文件内容输出出来</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+
+int main(void){
+   char *str;
+   FILE *fp = fopen (&quot;/home/zuos/Downloads/file.txt&quot;, &quot;r&quot;);
+   fscanf(fp,&quot;%s&quot;,str);
+   printf(&quot;%s\n&quot;, str);
+   fclose(fp);
+   return(0);
+}
+</code></pre>
+<p>你会在man-pages关于<code>fopen</code>对<code>mode</code>描述中看到：</p>
+<blockquote>
+<p>The  mode string can also include the letter 'b' either as a last character or as a character between the characters in any of the two-character strings described above.  This is strictly for compatibility with ISO C and  has no  effect;  the  'b' is ignored on all POSIX conforming systems, including Linux.  (Other systems may treat text files and binary files differently, and adding the 'b' may be a good idea if you do I/O to a binary file and  expect that your program may be ported to non-UNIX environments.)</p>
+</blockquote>
+<p>C语言将文件分成了两种——文本文件和二进制文件。文本文件和二进制文件自然是有区别的。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_6-sp.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="chapter_6-syscall.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_6-sp.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="chapter_6-syscall.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
